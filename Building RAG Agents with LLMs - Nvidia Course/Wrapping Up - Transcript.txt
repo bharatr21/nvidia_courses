@@ -1,0 +1,18 @@
+----------------------------------------------------------------------------------------------------
+Wrapping Up
+Video URL: https://d36m44n9vdbmda.cloudfront.net/assets/s-fx-15-v1/RAG-Videos/RAG_09_Wrapup.mp4
+----------------------------------------------------------------------------------------------------
+ Hello, and welcome back to the course.
+ As we wrap up this series, I wanted to extend a big congratulations to you.
+ If you've completed the last notebook, you've taken a significant step into your journey into your Tribal Augmented Generation, and actually just the realm of scalable AI solutions in general.
+ Now, let's talk about what comes next, and the resources available to you as you continue to explore and expand your knowledge and skills.
+ Even that you've already gotten the taste of Ragn, and have also touched upon some of the aspects of productionization and scalability, we highly recommend checking out the Generative AI Examples repository on the official Nvidia GitHub page.
+ This resource complements the course material really well, and actually goes a lot deeper into some of the things that we've been alluding in this course.
+ For example, stuff like microservice compartmentalization and realistic user interface deployment.
+ It also shows how you can kickstart your own local TensorFlow RTLM accelerated model, and query it through its raw interface instead of using a query router like that provided by the endpoints.
+ Additionally, if you wanted to implement and deploy your own endpoints, we could look into NIMO microservices as an next step.
+ NIMO microservices will give you access to a container, which you can use to kickstart your own session of large language models, which have a very common API similar to the one that you've been using.
+ Finally, I wanted to thank you for participating in this course.
+ Hopefully it's been a good time, and you've come away with some useful intuitions, and maybe a decent amount of code to get started with your next project.
+ Once again, congratulations on completing the course, and I wish you the best of luck as you continue on your journey.
+ See you later.

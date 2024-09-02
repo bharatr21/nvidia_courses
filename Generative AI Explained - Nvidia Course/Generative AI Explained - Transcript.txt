@@ -1,0 +1,92 @@
+----------------------------------------------------------------------------------------------------
+Generative AI Explained
+Video URL: https://dli-lms.s3.us-east-1.amazonaws.com/assets/s-fx-07-v1/task1_combined.mp4
+----------------------------------------------------------------------------------------------------
+ Hello everyone and welcome to the Deep Learning Institute.
+ Today we're going to be taking you through Generative AI Explained.
+ In this course you're going to learn what Generative Artificial Intelligence is, what are some of its applications, as well as some of the challenges and opportunities of Generative AI.
+ The course is broken down into four sections.
+ First we will discuss what Generative Artificial Intelligence is and how it works.
+ In the second and third sections we will discuss language and visual use cases of Generative AI.
+ In the last section we will discuss some of the challenges and opportunities facing Generative AI.
+ Each section will be followed by a few questions to make sure you become proficient with the most important concepts.
+ Let's get started.
+ Generative AI is definitely having a moment.
+ Just during the past few months we've seen applications of Generative AI in image synthesis and in language modeling that have really captivated the world's attention.
+ One really prominent model was the stable diffusion phenomenon that happened where we started seeing people creating images of all sorts of interesting things and started seeing a lot of applications of image synthesis that were new and a bit of fun.
+ For example I made a bunch of avatars of myself and I think a lot of people were really enjoying the new capabilities of image synthesis with Generative AI.
+ We've also seen ChatGPT become the fastest growing application in history with only taking two months to reach 100 million users.
+ Here I asked ChatGPT to say something about Nvidia GTC and it was able to understand a little bit about GTC and why we're having it and the ability of these systems to understand questions and do problem solving is just really extraordinary.
+ That's why we're all here today.
+ You guys have played around with these systems probably and are excited about them.
+ What we're going to be talking about is what is Generative AI? How's it built and where's it going? So let's get started.
+ The deployment of Generative AI is happening at a rapid pace and it's really happening in a profound way.
+ Just over the past few weeks we've seen Microsoft reinvent search by integrating AI-powered copylots into Bing and Edge.
+ We saw Meta announce a new top-level business group that is focused on Generative AI.
+ We saw announcements from Google about how some of their main products are going to be changed through Generative AI models that understand questions and can help us answer them.
+ There's a raft of startups and other companies that are figuring out new ways of using this technology in their own work.
+ This is the moment for Generative AI to really change the way that we do our work.
+ It's very exciting.
+ There's a lot happening.
+ Generative AI is making new tools for all of the most important work that we do in every different aspect of the economy and every field.
+ In education, Generative AI is going to change the way that we learn.
+ It's going to change the way that we explore ideas.
+ It's going to help us brainstorm.
+ I don't know if you remember back when you were a student and you were told to write an essay and sometimes you run into writer's block.
+ Well, Generative AI is going to help us get through that because we'll be able to ask a question to the AI about a topic and it's going to come back with some ideas, some of which are going to be interesting and will resonate with us.
+ Then we can elaborate on those in order to move forward with our work.
+ It's going to give us feedback.
+ It's going to help us in real time understand the strength of our arguments and maybe the success that we're having in conveying them to other people.
+ When we think about health care, it's going to help us walk through flowcharts of what we might be experiencing to better understand what kinds of actions we should take with our medical professionals to improve our health.
+ It's going to help the industry find better treatments, new kinds of chemicals that can be used to treat different problems.
+ It's going to help analyze various health conditions and help us come to a better picture of our health.
+ When we think about biology, we need to be able to understand large volumes of data, whether that's in protein structures or in genomics and Generative AI is going to help both with analysis as well as synthesis where we can deeply understand the information we have and then use that to synthesize new things that can help us.
+ Agriculture, there's so much involved in agriculture from data analysis to remote sensing, to robotics that are emerging.
+ It's going to help us be more productive there.
+ More things like programming.
+ Those of us that write programs for a living are already finding that these tools help us be more productive when we're debugging, when we're documenting, and when we're trying to build up scaffolding for what kind of code we should write and how it should all fit together.
+ These tools are also going to help in many other areas, like for example, writing.
+ So many of us write for a living, whether we're just writing emails to friends or whether we're writing content for other people to read.
+ When we think about marketing and the ads industry, there's going to be personalization at a level that we've never seen before that's going to help people more effectively communicate the benefits of the things they're building through personalized images and text.
+ Robotics, you know, robotics has been a dream of the artificial intelligence industry for a long time and these models are going to help make robotics more useful, help with planning, help with sensing, and geosciences.
+ We have an increased need to understand the Earth and things happening on the Earth are weather and climate.
+ Understand what's on the Earth, the biosphere, the geosphere, these tools are helping with that.
+ Or even design, you know, when we're trying to build things, whether that's architecture or web design or product design, these models are going to help us brainstorm about our ideas and put them in context so that we can understand them in relation to the things around them and hopefully make them more useful.
+ So generative AI really has extraordinary different kinds of applications for every aspect of what we do as a society.
+ And, you know, I've just been brainstorming with you here a little bit, but the applications are quite profound and go into every kind of work that we do.
+ So let's talk a little about what is generative AI.
+ When AI first started, we were mostly focused on classification and the goal of a classification model is to make a decision about something.
+ It could be, for example, classifying a picture.
+ So I have this picture of a gecko and the goal of the model would be to say, what is in this picture? Is it a goose? Is it a glove? No, it's a gecko.
+ That would be classification.
+ And the goal is then to make a decision about some variable, we'll call it x, that's a multi-dimensional vector, could have a lot of different entries in it.
+ So for example, a picture, if it's a megapixel picture, it has a million pixels and each of those pixels has three colors in it.
+ So that's like three million dimensions in a megapixel image.
+ So these data points that we're reasoning about, they could be complicated like a picture, they could be something like a document, they could be an audio file or they could be video.
+ But the purpose of classifying is just to make a decision, it's kind of to understand and analyze and then sort of boil down data into a result.
+ And that's where AI started.
+ Generative AI goes beyond that.
+ The goal is to understand the distribution of the data.
+ And that could be quite complicated because these are very highly dimensional spaces.
+ And once we have been able to model that distribution, then we can sample from it in order to generate a new example from that data distribution.
+ So for example, on the right here, I have a bunch of images of faces.
+ And if I wanted to synthesize a new face, then I would need to just sample from that distribution if I was able to learn it.
+ But the central problem then in generative AI has to do with learning data distributions.
+ And we do that through deep neural networks.
+ Just a little bit more about this.
+ So we know that the structure of data is captured in its distribution.
+ So for example, if we were just to sample random images from this highly multi-dimensional space of let's say 3 million points to come up with a megapixel image, almost all of the image, like almost like 99.
+99% of the images are going to be random noise with no structure.
+ It's just going to be kind of fuzzy, like a TV back in the old days.
+ The number of images that actually contain something from the real world or some sort of structure in it that we can perceive and understand is almost vanishingly tiny.
+ And those are the images, of course, that we're interested in.
+ And so if we had strong models for learning the structure of data, we could then generate new data.
+ And this is a really powerful idea, especially because we can construct these distributions in order to be conditional on things that we know that we want to use to influence the generation.
+ So we want to be able to control the output and make the output solve a problem for us.
+ Then we can describe the problem in the form of conditioning to this distribution and then sample from the result in order to get one of the many possible solutions to the question that we're asking.
+ It turns out that today's models can absorb truly astounding amounts of data.
+ So for example, if we're making an image generation model, we can train it on billions of images.
+ And if we're training a language model, we can train that model on trillions of words.
+ And they can absorb it not just by sort of understanding it at a surface level, but they can actually build up internal representations that deeply understand the structure and the meaning behind all of these data points that they're being trained on.
+ And that's what enables generative AI to solve new problems.
+ And that's why it's so exciting.

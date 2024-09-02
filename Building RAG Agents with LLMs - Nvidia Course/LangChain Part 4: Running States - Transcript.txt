@@ -1,0 +1,50 @@
+----------------------------------------------------------------------------------------------------
+LangChain Part 4: Running States
+Video URL: https://d36m44n9vdbmda.cloudfront.net/assets/s-fx-15-v1/RAG-Videos/RAG_04_Running_State.mp4
+----------------------------------------------------------------------------------------------------
+ Hello, and welcome back to the course.
+ In the previous video, we got introduced to the Langchain Expression Language, and the associated notebook hopefully gave you some practice and a sense of what this tool is capable of.
+ The notebook specifically focused on two different model roles, namely external models, which stream responses to the final user, and internal models, which make actionable predictions for internal reasoning.
+ So be it for parsing, by regular code, or for interpretation by a subsequent large language model.
+ In this video, we'll introduce a powerful approach for orchestrating these capabilities using Langchain's advanced chaining techniques.
+ We'll be formalizing something we'll call the running state chain.
+ This method will enable us to create dynamic, interactive systems that can manage complex tasks and evolve through interactions.
+ So let's dive right in.
+ In the previous notebook, we did make some interesting chains with some limiting assumptions to make an internal reasoning chain.
+ The systems generally started off with some input, which would then incorporate into a prompt, and then feed into an LM to get a response.
+ If this were an internal reasoning component, the response could then be fed back in through another pathway to help enforce some kind of logic.
+ And the end result would be an external response for an end user, probably streamed as it gets generated.
+ This process works just fine for our use case, and we were able to generate some final output.
+ But there were several bottlenecks in our system, which we don't really know how to address yet, or we haven't specifically discussed at least.
+ Let's say, for example, that we wanted to take the input, generate a synthetic generation, and then use both of those to do some kind of reasoning.
+ Let's say making a synthetic sentence that contains both the concepts.
+ In the previous notebook, we were actually able to get around this in our final example by keeping our little chain components separate.
+ After running the internal reasoning one, we would take its output, and add it to the input of the external reasoning chain.
+ And this actually worked just fine.
+ However, we can encapsulate this functionality into a single chain relatively easily, actually, by creating a pass-through-like system that passes both the output of the chain, and also its inputs in a single component.
+ Simple enough, right? Based on this idea, we can start progressing towards the idea of a running state, which will be crucial in developing more complex systems in the chain expression language.
+ In general programming, a running state is all the information that we have that we can use, and we can update it by the program through its execution.
+ It hinges on having named variables that can be initialized before the program, and mutate it throughout.
+ In functional programming and LCL by extension, we can use the pass-through system to create and maintain a running state by enforcing the following restrictions.
+ First, we need to specify that an initial state is the starting dictionary that contains all the values needed by your chain at the start.
+ And then we can define a running state to be any mutation of the original state.
+ So for example, an initial state might start out with just a user input, and a running state can be any kind of dictionary, hopefully including that original input or a new user input, or maybe some internal reasoning or whatever.
+ It can just be a dictionary with values.
+ Then we can define a branch to be a chain that can pull in a running state, so pull in a dictionary with some named values, and degenerates it into a value or a substate.
+ For example, a LLM prompt chain, so with a prompt and an LLM, that chain by default is going to take an dictionary and generate a single value.
+ So we can consider that to be like a branch.
+ Now that we've defined branches, we can then formalize a running state chain as a chain that runs branches, and then based on the output of the branches, it updates its running state.
+ This is what we'll call a running state chain, because it starts with an initial state, adds more values or mutates the values of the initial dictionary, but doesn't actually lose all the information.
+ From there, if you wanted to, you could just treat this system as is, keep allowing your variables to propagate through the system, and at the end, you'll get a dictionary with some things.
+ Some of them might be, who knows, the input, maybe internal reasoning, the output, you'll see in the course of the knowledge base also.
+ So yeah, you can do that, sure.
+ But a real power of this also comes in when you incorporate a while loop.
+ If your chain loops around, the running state that comes out of the chain can override the initial state, and keeps circulating through the chain until you're finally ready.
+ So at that point, after you've looped several times, maybe you hit an end condition or something like that, you will wind up with a final state.
+ When you have all of this, all you need to do is add conditional logic, and you'll realize that the variables, conditions, and loops concepts of regular programming are now in functional programming land, so in LCL.
+ Using these, along with some extra utilities from Leng chain, the next notebook will show you how to implement a running knowledge base by passing it around the chain and mutating it as it goes along.
+ It will also show off some nice tools that can be used to help co-wers LLM's to predict arguments to a function, or variables that are named, in what is known as a slot filling formulation.
+ We'll ask our LLM to output a selection of values in a specific format, and some Python will be used to parse the information into named variables, which can be used to call functions or just update state, and be used in subsequent prompts.
+ By the end of this notebook, you'll be able to implement the start of a dialog agent with some non-trivial internal reasoning, combining some prompt engineering with the slot filling and the running state chain formulation will be able to have a system that steers itself towards retrieving information from a database, and will be unable to answer user responses until it has sufficient information.
+ It'll also allow the system to guide the user towards giving information and steer it towards the direction of natural conversation.
+ Hope you enjoy the exercise, and I'll see you in the next video.

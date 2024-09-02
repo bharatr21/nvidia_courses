@@ -1,0 +1,23 @@
+----------------------------------------------------------------------------------------------------
+Summary
+Video URL: https://dli-lms.s3.us-east-1.amazonaws.com/assets/s-fx-07-v1/task5.mp4
+----------------------------------------------------------------------------------------------------
+ Generative AI is really having a moment.
+ People from around the world in every different domain are starting to see, Generative AI change the way they think about the problems that they solve during their core day to day work.
+ And it's really exciting.
+ It's an exciting moment for artificial intelligence to see new kinds of applications.
+ It's a little scary because things are happening fast.
+ There's a lot of change.
+ And there's risks that we have to manage.
+ We have to think through responsible ways of creating and deploying this technology.
+ And overall, I'm an optimist.
+ I believe in the power of progress.
+ I believe that making tools that help people be more productive at their work ultimately is gonna help us make the world a better place.
+ And it's gonna help us enjoy our work better.
+ It's gonna help us get more value out of it.
+ It's gonna help us solve problems that we didn't know how to solve before.
+ But for us to get from where we are today to there is gonna require a lot more work.
+ And a lot more research and development and investment.
+ And a lot of brilliant people figuring out the right way of deploying this technology to solve their own problems.
+ And I can't wait to see what you all figure out.
+ And I can't wait to continue helping with that myself.

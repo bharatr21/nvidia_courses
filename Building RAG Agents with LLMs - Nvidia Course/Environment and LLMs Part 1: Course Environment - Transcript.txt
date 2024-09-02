@@ -1,0 +1,33 @@
+----------------------------------------------------------------------------------------------------
+Environment and LLMs Part 1: Course Environment
+Video URL: https://d36m44n9vdbmda.cloudfront.net/assets/s-fx-15-v1/RAG-Videos/RAG_01_Environment.mp4
+----------------------------------------------------------------------------------------------------
+ Hello, and welcome back to the course.
+ In our last session, we introduced you to the overall ideas of the course, namely what topics will be covered, some of the prerequisites, overall structure, etc.
+ In this video, we really just wanted to introduce the course environment to help you actually get started with the material.
+ If you haven't already, please click the play button below the video.
+ It should take a few minutes to start up, after which point you will see a little timer pop up and a play button that you will be able to click.
+ When you start up the course environment, you will be graded with a Jupyter Lab screen kind of like this one.
+ From here, you will be able to access some of the files, run some of the code if you really wanted to, and take advantage of, well, in general, some compute resources that are allocated to you through a provider like AWS or Azure.
+ This is a pretty standard interface in the Python development world, and it's actually really easy for you to replicate on your own system.
+ You can just run the Jupyter Lab command, kind of like this, specify the directory that you'd like to focus on, and this will actually start up a session for you that you'll be able to access in a web browser.
+ If you have these notebooks inside of your directory, you can work on them, and it's great, and you can run them, and everything will be fine.
+ Another place you've probably seen this interface from, and one we're really happy to recommend for this course, is Google Collab.
+ Google Collab is a service that also uses Jupyter Labs, under the scene, with a bit of flavoring, but it also provides some extra features, and also allows you to allocate computational resources from a very predictable environment setup.
+ Looks kind of like this, where you can upload a notebook, you can try to hit a play button on one of the cells, and it'll actually allocate a compute instance for you with potentially GPU if you want, or just CPU by default.
+ Our course environment is somewhat similar to Google Collab, in that it is remotely hosted, allowing you to interact with Jupyter Labs instance through web browser.
+ The main difference with our environment versus theirs is that, well, we can't just allocate stuff on the fly with a little button, it's actually tied with your course environment, right? Additionally, we actually show you how you can make this thing yourself, and potentially toss it out to other users, or deploy a custom microservice infrastructure on your own device if you'd like.
+ This is presented in this folder, right here, and we'll be kind of going over some of the details of what all happens, why it's all there, in the first notebook.
+ Now, in this course, we'll be focusing less on the details of the course environment, and more on the underlying concepts and intuitions of a lab orchestration.
+ After all, we want you to grasp the ideas and apply them in whatever context you'd like, regardless of what environment you're working with.
+ The main reason for this video, and the first notebook, is just to get you familiarized with the environment, while also giving you a bit of food for thought about what you can do to deploy an interface like this for somebody else.
+ If you're interested, feel free to check out the first notebook and the Compose directory to see how the environment was set up, and remember to use the environment for downloading the notebooks and completing the final assessment portion of the course.
+ So yeah, that was the Environment Crash Course video.
+ We'd recommend taking some time to go over Notebook 0 and 1 before moving on, just to get a feel for the setup, and from there, feel free to continue working in the course environment, or again, download the notebooks and work on them however you'd like.
+ As a few little notes, the solutions for all these notebooks will be provided in the solutions directory, with a few exceptions, specifically towards the end where it's like assessment territory.
+ So feel free if you get stuck to check out the solutions, but do try to actually understand the code and see why it's motivated.
+ Also again, be mindful of the timer.
+ The session will terminate every four hours, and for that reason it's a good idea to just download the notebooks as you go along.
+ Or all at once, just have them backed up, all good.
+ Alright, that about wraps up for the Environment Setup.
+ So good luck with the first Notebook, and see you in the next video.

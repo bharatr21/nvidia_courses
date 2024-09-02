@@ -1,0 +1,37 @@
+----------------------------------------------------------------------------------------------------
+Retrieval Augmented Generation Part 7: Vector Databases
+Video URL: https://d36m44n9vdbmda.cloudfront.net/assets/s-fx-15-v1/RAG-Videos/RAG_07_Vectorstore.mp4
+----------------------------------------------------------------------------------------------------
+ Hello, and welcome back to the course.
+ In our last video, we learned about the underlying value proposition for document-level embedding models.
+ Along the way, we got to use the system for some of its more raw properties, such as training a classifier on top of it, and we're able to see really how it works and what kind of properties emerge out of it.
+ In this section, we'll be diving deeper into the practical integrations that will finally allow us to perform proper retrieval augmented generation, using it for both conversational memory and document chatting.
+ This step will culminate a lot of intuition build-up from the previous sections, so hopefully it feels satisfying to finally integrate it all into a usable system.
+ Previously, we explored the raw conversion functions provided by the Langchain NVIDIA Embedding class, converting passages into their vector representations, and comparing them using a similarity function.
+ This time, we're stepping up the game with the introduction of a vector store.
+ This powerful structure will automatically embed and index our document chunks, transforming them into searchable keys within a retriever.
+ Simply put, you can now pass in a string of your choice and receive a set of documents ranked by semantic similarity.
+ For most of this course, we will be using the Facebook AI similarity search library, or at least its integration with Langchain, to manage our vector store embedding and similarity search strategies.
+ The system is extremely nice in that after you construct a vector store using a relatively streamlined construction API, you will be able to interpret your vector store as a retriever, and then treat it as a runnable chain.
+ On a surface level, it looks like everything is very simple, and you'll just be able to pass in some input, and you will get, as a return, some similar documents based off of the similarity search that's happening under the hood.
+ Now behind the scenes, there is plenty of sophisticated orchestration going on to make this process efficient, specifically on the storage and similarity search aspects.
+ The aspects related to efficient querying is mostly going to still be done by the query router, and in the cloud, where the model is being hosted.
+ But on the local level, yes, there is still plenty of similarity search optimizations that need to happen.
+ From the perspective of scale, there are several natural ways to progress from a phase vector store into some more optimized solutions.
+ One relatively straightforward extension of the phase vector store running on a CPU instance is of course to run it on a GPU and allow the similarity search to happen a lot faster.
+ FAS GPU is there to help accelerate this process, and other components like raft are being integrated into systems like FAS in order to make this process significantly faster and more scalable.
+ This is of course very small consideration when you're dealing with only a single user, but when you're dealing with many users all at once, then it's a much bigger problem and it's something important to tackle.
+ Additionally, beyond just accelerating the similarity search aspect, there's also the database aspect that can also be extended.
+ There are various solutions like Milvus, which actually incorporate a similarity search accelerator such as FAS, but at the same time expand the storage and retrieval capacities to a database level scheme, using efficient caching and distribution strategies to make sure everything is redundant, scales nicely, and doesn't get throttled.
+ In the upcoming notebook, we will guide you through the process of integrating a vector store powered conversation buffer.
+ This approach allows us to have a conversation history tracked via a vector store, allowing the agent to retrieve pertinent information as necessary to avoid context overflow.
+ This technique is particularly useful in a scalable deployment scenario where each user can have a local automatic vector store on their edge device, tailor made for their conversation history.
+ We'll also be taking this opportunity to circle background towards document reasoning, since now we have a new tool that allows us to retrieve document chunks on the fly.
+ If a vector store is populated with a lot of chunks from a document or a series of documents, we'll be able to query against it using a single string, potentially a user input or a synthetic generated key, and this will allow us to enrich our context with a dynamic history.
+ This is pretty much the essence of retrieval augmented generation, since we are retrieving things and we are augmenting our own generation by the results.
+ This form of rag, often referred to as always on or naive rag, operates under the assumption that retrieval is essential at every interaction step.
+ However, the door is still open for more sophisticated implementations such as non-naiv rag or rag agents that strategically decide when and where to access information.
+ This can be implemented using some combination of branching logic, as well as some kind of predictive planning, which we don't really cover in this course, but it's a fundamental skill to look into and a good next step forward.
+ Alright, now as is good a time as any to check out the notebook and see what you can do.
+ Of note, the final rag integration is left as an exercise which you will be able to further integrate in the last notebook.
+ Good luck and see you in the next video!.

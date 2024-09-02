@@ -1,0 +1,56 @@
+----------------------------------------------------------------------------------------------------
+Documents and Embeddings Part 6: Embedding Models for Retrieval
+Video URL: https://d36m44n9vdbmda.cloudfront.net/assets/s-fx-15-v1/RAG-Videos/RAG_06_Embeddings.mp4
+----------------------------------------------------------------------------------------------------
+ Hello, and welcome back to the course.
+ In the previous section, we started trying to get our LLMs to reason about large documents.
+ We were able to do this largely by splitting up some long form data into little chunks and refining them into useful or shortened representations.
+ This was actually a very good approach for summarizing and restructuring, and can even be used to make something as intricate as a knowledge graph if you really wanted to.
+ But it's a bit slow and can't really be done on the fly.
+ It's more of a pre-processing step, and in taking it you make various assumptions about what things you will need for your decision making and what things might not be as necessary.
+ In this section, we will flesh out a different technique known as retrieval, which will allow us to take the same chunks as before and retrieve them on the fly.
+ Using this technique, your chatbot will be able to query for documents using some cheap embedding strategies and a bit of similarity search.
+ Before we get too deep into this, we'll need to review a little bit about language models in case you haven't had to consider some of these topics before.
+ You may know that under the hood of most large language models is a deep learning architecture known as a transformer architecture, which was motivated to improve reasoning capability on sequences.
+ In it, there are usually some per sequence entry pathways that allow us to propagate reasoning surrounding each entry in an input sequence.
+ And there are also some lightweight attention interfaces, which allow us to mix the information from the entire input sequence all at once.
+ These are stacked in series, and in general, the output of the last transformer block will be a sequence of latent embeddings.
+ This serves as the LLM backbone, and assuming that the network was trained on a lot of data, should generate semantically dense embeddings for our language tasks.
+ The LLMs you've been dealing with in this course have been decoder style models, which are trained to predict word after word until a stop token is generated.
+ AKA, you've been dealing with autoregressive models.
+ In these architectures, the transformer backbone is used with some key modifications, like limiting token reasoning towards only attending backwards in the sequence.
+ And a single token at a time is extracted from the overall output sequence, usually from the right hand side, in this case.
+ When looking beyond the superficial one token that gets generated at a time, the entire embedding sequence does actually get generated through this process.
+ It's just not all necessary, and a lot of the generation is optimized away, as appropriate.
+ In contrast, there is a different flavor of transformer model called an encoder model, which has roughly the same underlying intuition, but is generally trained to generate useful per sequence or per token logic.
+ This is significantly easier to train, as opposed to sequence forecasting, because you don't have to have consistency over multiple iterations of the generation.
+ So in practice, it becomes much quicker to train up these systems, they can be much more lightweight while still being very performant, and the transformer components can implement bidirectional reasoning, which will allow for deeper insights into the entire sequence, as opposed to just looking backwards in the generation process to see what came before.
+ This is exactly what we'll be using for our task.
+ In this coming notebook, we will use one such encoder model, specifically a document encoder model, to generate embeddings for the passages we'd like to work with.
+ Because this model has been trained to generate useful embeddings, useful here in the context of document retrieval, actually, we'll be able to compare the meetings and structure of the resulting vectors via similarity search.
+ Let's see what this means with an actual practical example.
+ Let's say that hypothetically we have a series of passages, and we're interested in figuring out which ones are similar, and which ones are not similar.
+ Assuming that we have a well-trained embedding model, and all of our inputs are at least relatively similar, such that our embedding model can reason about them, then we can pass our inputs through the embedding model to get the vector representations.
+ Knowing that the embedding model is trained well, the vector representations should be similar when the meaning of the inputs are similar.
+ That way, we can take the output vectors, and we can compare them using a metric such as Euclidean distance or cosine similarity.
+ By doing this, we're able to reason about how close in meaning things are with numerical consideration, and use that for something like filtering or retrieval.
+ This is really nice because as we said earlier, an embedding model is relatively lightweight, which means that a particular query is going to be relatively cheap.
+ It's also really nice because this means that we can do this on a preprocessing level if our passages are already known.
+ So if our approach is to embed a series of static passages or documents, then we can do that before any kind of dialogue, so any kind of user-facing latency.
+ This is at least the case for a bi-encoder, where the passages can be encoded using either the same or potentially different encoders depending on the strategy.
+ But the encoding happens independent of the pair, meaning that we can take a passage and we can encode it up into a vector and reuse that again and again.
+ In contrast, there is also a cross-encoder formulation where both passages or both inputs get passed into the same encoder to generate a single, regression-value classification.
+ This is different than the bi-encoder because you can't just encode a specific passage and allow that vector representation to stand.
+ You will end up having to re-encode every time you do a query.
+ However, it is nicer in some contexts, specifically when you're interested in having as much overlap considered between the two passages.
+ So for example, if there's something really important about these two passages being together, this might be a time where the cross-encoder gets utilized.
+ In practice, a little bit later down the road, you'll probably see cross-encoders getting utilized for re-ranking, so it's a more expensive operation that happens during retrieval augmented generation.
+ Sometimes.
+ Now regardless of which kind of embedding model you end up using for your task, it's important to consider what kind of data it was trained on and what kind of attributes it was expected to predict based off of its training task.
+ Sometimes you will find very niche purpose embedding models that are only good for something like toxicity classification or sentiment analysis.
+ Other times you'll find more generalist models that are intended to be used for just about anything.
+ This is actually what we'll be using in our semantic filtering example, where we will assume that our embedding model is going to output useful information about our inputs, and we will train a classifier on top of the embeddings, trying to classify whether a passage is of the kind that we want to respond to, or the one which we would like our chatbot to more or less ignore.
+ In the notebook that follows this one, we will use the same techniques under the hood to implement proper retrieval augmented generation, meaning that we will retrieve documents from a large document source, and we will use them as context for our LLM.
+ This will combine all the skills we've worked to build throughout this course and should be a really fun time.
+ So, now is a great time to go ahead and try out the notebook on embedding models.
+ Good luck and see you in the next video.

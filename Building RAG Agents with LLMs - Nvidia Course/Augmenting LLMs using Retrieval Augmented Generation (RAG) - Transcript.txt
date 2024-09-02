@@ -1,0 +1,328 @@
+----------------------------------------------------------------------------------------------------
+Augmenting LLMs using Retrieval Augmented Generation (RAG)
+Video URL: https://d36m44n9vdbmda.cloudfront.net/assets/s-fx-16-v1/augmentingLLMUsingRAG.mp4
+----------------------------------------------------------------------------------------------------
+ Welcome to Augmenting LLMs using Retrieval Augmented Generation.
+ Here's what we will be covering in this video.
+ Retrieval Augmented Generation explained, also called RAG.
+ The RAG ingestion and retrieval process, Nvidia's canonical RAG model on NVAI foundations, and then we will sum it all up and see what we've learned.
+ All right, we're Nvidia's NV learning team, and we are going to introduce you to a Retrieval Augmented Generation as a way to improve your large language models.
+ Our teams at Nvidia have been hard at work creating an accessible pipeline for LLMs combined with the improvements that can be gained using RAG to make it a learnable and accessible process so you can dive right in.
+ We're going to show you a workflow that we believe is a representative starting point.
+ It will save you time in having to try and go through all the various permutations and decisions you would otherwise make in choosing an LLM framework.
+ An embedding model of vector database and a trained LLM.
+ While Nvidia could deliver an end-to-end solution where there's no vendor lock, just so you know, any component can be replaced with any leading open source or commercially available option.
+ In this introduction, we provide a starting point using components we at Nvidia have used internally.
+ In this course, we're going to explain RAG how RAG improves generative AI and how it fits into a large language model pipeline.
+ Our goal is to get you started on your LLM RAG journey.
+ We will present general RAG concepts in the context of Nvidia's canonical RAG model.
+ We hope that this will give you a leg up taking advantage of the experience we have garnered in setting up this pipeline.
+ Generative artificial intelligence, Gen AI, as it's called, is exceptionally good at creating text responses using large language models, which we refer to as LLMs.
+ Where all the AI is trained on bass quantities of unlabeled or unstructured data.
+ However, information used to generate responses is limited to the data used to train the AI, often a generalized LLM.
+ The LLMs data is very likely to be out of date and in the example of a corporate AI chatbot, it may not include specific information about the organization's products or services.
+ That can lead to made up responses referred to as hallucinations.
+ These wrong answers in turn erode confidence in the technology among customers and employees.
+ In addition to an LLM's limited static knowledge and lack of domain specific data, they also lack providence or transparency.
+ How do you improve the LLM performance of a pre-trained LLM when the pre-trained LLM out of the box don't perform as expected or hoped? There is an ongoing debate between fine-tuning and retrieval augmented generation.
+ However, fine-tuning and rag are not opposing techniques.
+ Instead, they can be combined to leverage the strength of each approach.
+ Before LLMs became so large, we would often extend their embedded knowledge by fine-tuning them.
+ Fine-tuning helps to adapt the general language model to perform well on very specific tasks.
+ Fine-tuning is appropriate for changing the writing style, for example, or tone of a response, improving the way the LLM converses with users.
+ However, adding new data by way of fine-tuning is time-consuming and budget-intensive, normally making it impossible or impractical, I should say.
+ Retrieval augmented generation, rag, as it's called, to the rescue, introduced by Facebook AI Research in 2020.
+ It is an architecture used to optimize the output of an LLM with dynamic domain-specific data without the need of retraining the model as you would with fine-tuning.
+ Rag is an end-to-end architecture that combines an information retrieval component with a response generator.
+ The retrieval component goes out and fetches relevant document snippets in real time from a corpus of knowledge.
+ The generator takes the input query along with the retrieved chunks and generates a natural response for the user.
+ The generator is typically a GPT, generative, pretrained transformer.
+ In short, rag helps the LLM retrieve relevant external information and include that information in its responses.
+ Rag excels at providing access to dynamic enterprise data sources and offers transparency in the response generated.
+ Rag can address several limitations of fine-tuning.
+ Fine-tuning and rag can work together because fine-tuning can add crucial layer of adaptability and refinement.
+ This diagram shows you Nvidia's launch point to get you started with Rag.
+ This architecture takes some of the best practices we've learned and provides them to you in an easy-to-consume reference application.
+ Starting in the upper right, there is enterprise data, which may consist of PDFs, documents, structured databases, emails, audio, video data sources, and so on, that are processed into a form the LLM can digest.
+ In the center, the yellow icon is the LLM framework that orchestrates efficient interaction between parts of the pipeline.
+ In our canonical example, we choose Lama Index.
+ To the right is the embedding model, which vectorizes the enterprise data and the query or prompt into a form the LLM can understand so that it can be incorporated into the LLM response.
+ We chose E5 large as our embedding model, and we have made it more GPU efficient with tensor RT.
+ We will cover that in detail a bit later.
+ Below that is the vector database, where the vectorized data is stored and searched via specialized search algorithms.
+ To the left is the generalized LLM, our case, Lama 2.
+ That has been enhanced by NVIDIA's Triton inference server and transformed by adding your up-to-date domain specific data from the enterprise data that we spoke of at first in the upper right, and produce a response specific to your enterprise application.
+ Let's take a look at an example of how RAD can be used with your enterprise data.
+ OK, so this is a demo of RAG in Omniverse.
+ What we've done is we've augmented the car configurator with a spec sheet from BYD on a motive that has all the specs about the cars, features, and capabilities, things like weight, and mileage, and seats, and lights, and so on.
+ So this is going to allow a car buyer to ask lots of questions as if he had a really knowledgeable salesperson.
+ Turn on the lights.
+ Turn lights on.
+ Tell me about them.
+ The lights on the car include lead headlights, adaptive front lighting system, automatic headlights, daytime running lights, and corner lights.
+ The car also features dynamic turn signals and the dynamic welcome light.
+ For safety, the car is equipped with high-break lights.
+ The lighting system is designed to improve visibility and safety.
+ Great, but from now on limit your answers to 30 words or less.
+ Understood.
+ We'll keep responses concise.
+ Tell me about the adaptive front lighting system.
+ Adaptive front lighting system, AFS, improves visibility during night driving.
+ It adjusts the headlights according to vehicle speed and steering angle.
+ Tell me about the driver assistance features in this car.
+ The car includes features such as lane departure warning, adaptive cruise control, forward collision warning, automatic emergency braking, blind spot detection, and rear collision warning.
+ There are many different approaches to constructing a rag pipeline.
+ Let's take a look at three examples.
+ Classic rag or naive rag simply retrieves data from an external knowledge source, chunks the data into smaller pieces, embeds the data into a vector database for a similarity search, augments the prompt with results of this additional source knowledge, and feeds that information into the LLM.
+ In general, this approach is used for simpler applications and when you want to limit the results inside the scope of the external knowledge source.
+ Invidias canonical examples and example of classic rag.
+ At InVIDIO, we have added API endpoints for the embedding model and the LLM to integrate DGX Cloud services via the InVIDIO AI playground.
+ This will make it easier for users to get started with our example rag pipeline.
+ Agent assisted rag adds an agent wrapper around the LLM.
+ The agent queries the LLM to determine next steps along with its reasoning path.
+ It has access to rag tools, for example, a calculator or a web search to construct the best possible answers.
+ In some cases, it does have more overhead than classic rag, due to the multiple LLM calls to execute its chain of thought.
+ Example agents include 0 shot, tasks on some input, where the agent considers one single interaction with the LLM.
+ It will have no memory.
+ This is more closely aligned with classic rag.
+ Chain of thought, an agent that excels at decomposing a complex query into a series of simpler tasks can be completed using rag tools.
+ The third example is rag with guardrails.
+ And it relies on libraries like EnVIDIO's NEMO guardrails to help derive user intent, which assists an agent assisted rag pipelines to speed up the chain of thought.
+ This approach offers a balance between the efficient classic approach of implementing rag with every user call versus the slower method of implementing a conversational AI agent with rag tool access.
+ Guardrails are the safety net.
+ They ensure that every output aligns with the highest standards of relevance and appropriateness.
+ In our rag model, it provides rails against user queries and LLM responses to ensure the quality of rag pipelines.
+ EnVIDIO NEMO guardrails enables you to set up three kinds of boundaries, topical guardrails that prevent apps from veering off into undesired areas.
+ For example, they keep the customer service assistance from answering questions about the weather.
+ Recall that the auto configurator did not talk about the weather.
+ Safety guardrails that ensure apps respond with accurate, appropriate information.
+ They can filter out unwanted language and enforce that references are made only to credible sources.
+ And then there's security guardrails that restrict apps to making connections only to external third party applications known to be safe.
+ Here is a generalized representation of how rag works.
+ First, raw data from diverse sources, such as databases, documents, or live feeds, is ingested into the rag system.
+ To pre-process the data, chain, for example, and LLM index, which we will cover in more detail later, provide a variety of document loaders.
+ Those loaders load data of many forms from many different sources.
+ The term document loader is used loosely.
+ Source documents do not necessarily need to be what you might think of as a standard documents, PDFs, text files, and so on.
+ After documents have been loaded, they are normally transformed.
+ One transformation method is called text splitting, which breaks down long text into smaller segments, also known as chunking.
+ This is necessary for fitting the text into the embedding model.
+ When data is ingested, it must be transformed into a format that the system can efficiently process.
+ Generating embeddings involves converting data into high-dimensional vectors, which represent text in a numerical format.
+ The processed data and generated embeddings are stored in specialized databases known as vector databases.
+ These databases are optimized to handle vectorized data, enabling rapid search and retrieval operations.
+ Storing the data in rapid draft accelerator vector databases like Milvis, for example, guarantees that information remains accessible and can be quickly retrieved during real-time interactions.
+ LLMs form the foundational generative component of the RAAG pipeline.
+ These advanced generalized language models are trained on vast datasets, enabling them to understand and generate human-like text in the context of RAAG.
+ LLMs are used to generate fully-formed responses based on the user query and the contextual information retrieved from the vector databases during user queries.
+ When a user submits a query, the RAAG system uses the index data and the vectors to perform efficient searches.
+ The system identifies relevant information by comparing the query vector with the stored vectors in the vector databases.
+ The LLMs then use the retrieved data to craft appropriate responses.
+ By using RAAG, you can provide up to date and proprietary information with ease to LLMs and build a system that increases user trust, improves user experiences, and reduces hallucinations.
+ Why do we need RAAG? RAAG is best suited for applications that query databases, documents, or other structured or unstructured data repositories.
+ RAAG use cases include question answering, documents summarization, and chatbot applications among others.
+ Unlike pre-trained LLMs, a RAAG pipeline knowledge base can be easily modified to supplement in real time.
+ RAAG offers agility and up-to-date responses in rapidly evolving data landscapes, making it ideal for projects with dynamic information requirements.
+ Your business can build applications to leverage the capabilities of RAAG, coupled with LLMs, for example, they can be used as creating writing assistance for marketing, document summarization for legal teams, encoding writing for software development.
+ RAAG allows you to create true business value from LLMs tailored to your enterprise use case.
+ Let's go into more detail.
+ The retrieval process is a multi-step process for deducing the most relevant information to provide the LLMs to generate a response to the user's query.
+ Knowledge databases ingestion is the first step in that process.
+ Data is retrieved from external sources, including databases, documents, PDF, HTML, internet, APIs, and data repositories.
+ Invidia's canonical reference app follows the following model of data ingestion.
+ Once the knowledge base is loaded, we pre-process it before we can generate the embeddings required for storage in a vector database.
+ It includes the following steps.
+ Clean the text, which includes removal of any HTML, markdown, metadata, etc.
+, leaving us with raw text content.
+ Chunking is the process of grouping different bits of raw text together into more manageable or meaningful segments.
+ This is a required step to be able to generate embeddings since embedding models are limited by context links.
+ Remove duplicates in the process of removing duplicate chunks thereby reducing repetition.
+ This is accomplished by comparing chunk overlaps.
+ And then lastly, tokenization is the process of breaking process chunks into tokens, words, subwords, symbols that become base units for generating embedding.
+ After data ingestion, the next step is generating embeddings.
+ At its core, vector embedding refers to the process of representing words, sentences, or even entire documents in a mathematical space by converting the text into an array of floating point numbers.
+ Unlike traditional machine learning methods that rely on sparse representations like one-hot encoding, which converts strings to numerical representations, vector embeddings encapsulate the semantic relationships between words and enable algorithms to comprehend their contextual meaning.
+ In short, the primary purpose of the embedding model is to convert discrete symbols such as words into continuous valued vectors.
+ These vectors are designed in such a way that similar words or entities have vectors that are close to each other in the vector space, reflecting their semantics similarity.
+ This approach enables machines to capture the meaning of words and the relationships between them, even in scenarios where those relationships are complex and context dependent.
+ Vector embeddings serve as a bridge between the raw textual input from the ingestion phase and the language models neural network.
+ Instead of feeding the model with discrete words or characters, the embeddings provide a continuous representation that captures the meaning and context of the input.
+ This allows LLMs to operate at a higher level of language understanding and produce more coherent and contextually appropriate outputs.
+ In a rag pipeline that generated embeddings are first stored in a vector database before being retrieved and passed to the LLM.
+ An index is then created when the embedding vector arrays are inserted into the vector database.
+ Figuring out the best formats for data ingestion and indexing is non-trivial.
+ We want to index the data in such a way that it can be easily used in our downstream LLM, which in this case of our canonical reference application is LLM2.
+ We'll go into detail on LLM2 later in the presentation.
+ A simple way of indexing is to combine an embedding based retrieval model with a language model.
+ As I said before, we create text chunks from the documents, creating an embedding for each chunk, and we have indexing, store the chunks in a vector store.
+ You can choose to either store the vectors with a simple in-memory structure or use a proprietary vector store.
+ A vector database stores high-dimensional vectors for example embeddings, and facilitates fast and accurate search and retrieval based on vector similarity.
+ For example, artificial neural networks known as A and N algorithms.
+ Some databases are purpose-built for vector search, for example, MILMUS.
+ Other databases include vector search capabilities as an additional feature, for example, redis.
+ Using which vector database to use depends on the requirements of your workflow.
+ Retrieval augmented language models allow pre-trained models to be customized for specific products, services, or other domain specific use cases by augmenting a search with the additional context that has been encoded into vectors by the LLM stored in a vector database.
+ More specifically, a search is encoded into vector form and similar vectors are found in the vector database to augment the search.
+ The vectors are then used with the LLM to formulate an appropriate response.
+ Retrieval augmented LLMs are a form of generative AI and they have revolutionized the industry of chatpots and semantic text search.
+ The user input or prompt is the basis for generating a response.
+ In both LLM index and LLM chain, which I will once again talk about soon, there is a concept of prompt templates.
+ Prompts can be very detailed and sophisticated, so prompt templates can be a useful high-level abstraction to manage your code effectively.
+ They are predefined set of instructions provided to the LLM and God the output produced by the model.
+ In RAD, we combine retrieval and generation.
+ The relevant retrieved data is combined with the prompt.
+ The relevant chunks are passed as part of the prompt as context to the LLM.
+ The combined prompt and retrieved data is represented to the foundation model, for example, the GPT to generate a relevant response.
+ For those who want local inferencing as a solution, there are some prerequisites to work with Nvidia's canonical RAD model.
+ They include the latest Tesla and GTX drivers, at least one GPU, the latest Nvidia Cuda version and downloads of LLM2 from either meta or hugging phase.
+ Don't have a GPU? You can still explore the canonical RAD model demo from the Nvidia AI Foundation's interface.
+ There's a version of this pipeline that doesn't require you to have a GPU.
+ Instead, it uses Nvidia AI playground API calls for inferencing.
+ NV API is Nvidia's core software development kit that allows direct access to Nvidia GPUs and drivers on all Windows platforms.
+ NV API provides support for operations such as querying the installed driver version, enumerating GPUs and displays, monitoring GPU memory consumption, clocks and temperature, direct X and HL SL, extensions, and more.
+ You can use NV API with the compute thread array abbreviated as CTA to sign up.
+ Here's the interface to Nvidia's LLM2 API.
+ Let's take a look at the RAD components that comprise our canonical RAD model.
+ Our reference application is built on top of popular open source LLM frameworks, the Langchain and LLM index, which we will introduce you to both of them here.
+ Which framework do you choose? LLM index or Langchain? We recommend that you read more about the unique strengths of both LLM index and Langchain on your own.
+ At a high level, Langchain is a more general framework for building applications with LLM's.
+ Langchain is currently more mature when it comes to multi-step chains and other chat functionality such as conversational memory.
+ LLM index has plenty of overlap with Langchain, but is part, particularly strong for loading data from a wide variety of sources and indexing and or querying tasks.
+ Since LLM index can be used with Langchain, the frameworks unique capabilities can be leveraged together.
+ Here's an outline of what Langchain offers.
+ This includes model wrappers, prompt templates, indices, and vector stores, document loaders for retrieval and text splitters for chunking.
+ You can chain components of Langchain to solve problems like chatting with a PDF and analyzing data.
+ Langchain offers agents that allow the use of tools assisted rag.
+ Langchain provides a simple framework for connecting LLM's to your own data sources.
+ Since LLM's are both only trained up to a fixed point in time and do not contain knowledge that is proprietary to an enterprise, they can't answer questions about new or proprietary knowledge.
+ LLM index using the canonical model is a data framework for LLM applications to ingest structure and access private or domain specific data.
+ Since LLM's are both only trained up to a fixed point in time and do not contain knowledge that is proprietary to an enterprise, they can't answer questions about new or proprietary knowledge.
+ LLM index includes a class simple directory reader which can read saved documents from a specified directory.
+ It automatically selects a parser based on the file extensions such as PDF, saving you a lot of work.
+ Often the data extracted from knowledge sources are lengthy exceeding the context window of LLM's.
+ If we send text longer than the context window, the train models such as chat GPT API will shrink the data leaving out crucial information.
+ One way to solve this is text chunking which you recall we spoke of chunking before.
+ In text chunking, longer text are divided into smaller chunks based on separators.
+ Text chunking has other benefits besides making it possible to fit text into a large language models context window.
+ Smaller text chunks result in better embedding accuracy, subsequently improving retrieval accuracy.
+ Narrering down information will help it in getting better results.
+ The final step is to query from vectors and get a response from the LLM.
+ LLM index provides a query engine for querying and a chat engine for a chat like conversation.
+ The difference between the two engines is the chat engine preserves the history of the conversation and the query engine does not.
+ Let's take a closer look at the embedding model in our canonical RADG model.
+ It's important to understand that embedding models can produce different results.
+ We use E5 large as an embedding model to convert our text to vectors.
+ E5 large is a great embedding model when you are first getting started with RADG.
+ We have optimized E5 large for tier transaction level modeling called TLM, which makes it more efficient on GPUs.
+ It also has a commercial license, so it can be set up in an enterprise data center.
+ You can see it's well worth it to take advantage of our advanced efforts before diving headlong into your own projects.
+ Recall that embeddings are representations in a vector space that capture relationships between words or phrases.
+ These representations enable machines to process and comprehend language effectively.
+ The vectors are designed in such a way that similar words or entities have vectors that are close to each other in the vector space, reflecting their semantic similarity.
+ This approach enables machines to capture the meaning of words and the relationships between them, even in scenarios where those relationships are complex and context dependent.
+ To go into even more detail on E5, which stands for embeddings from bi-directional encoder representations, is an innovative approach to training embeddings.
+ In the E5 model, embeddings are trained using a method called contrastive learning on a dataset known as CC pairs, short for colossal clean text pairs.
+ This dataset is unique in that it can contain diverse and highly high quality text pairs, providing a rich source of training signals.
+ Unlike traditional methods that rely on sparse labels or low quality synthetic pairings, E5 leverages the curated web scale CC pairs dataset.
+ To enhance the quality of the data, a novel strategy based on consistency is employed for filtering.
+ This strategy helps to ensure that only the most valuable and reliable text pairings are used for training.
+ This meticulous curation resulted in a dataset comprising approximately 270 million text pairs, forming the foundation for contrastive pre-training of the E5 embeddings.
+ However, the innovation does not stop there to further elevate the model's performance, supervised fine tuning is introduced.
+ This involves training the E5 embeddings with labeled data, effectively incorporating human knowledge into the learning process.
+ The outcome is a consistent improvement in performance making E5 a promising approach for advancing the field of embeddings and natural language understanding.
+ E5 has established better efficiency and versatility, which was previously unexplored territory in the field of text embedding models.
+ Even though it's a slight modification from the previous methods, its performance has improved significantly compared to the rest of the models.
+ Following embeddings is the vector database.
+ We use Milvis for the canonical model.
+ Milvis is an open source vector similarity search engine.
+ Vector similarity search in Milvis calculates a distance between query vectors and vectors in the collection with specified similarity metrics and returns the most similar results.
+ As a database specifically designed to handle queries over input vectors, it is capable of indexing vectors on a trillion scale.
+ Unlike existing relational databases, which mainly deal with structured data following a predefined pattern, Milvis is designed from the bottom up to handle embedding vectors converted from unstructured data.
+ As the internet grew and evolved, unstructured data became more and more common, including emails, papers, internet of things, sensor data, Facebook photos, protein structures, and much, much more.
+ In order for computers to understand and process unstructured data, they are converted into vectors using embedding techniques.
+ Milvis stores and indexes these vectors.
+ Milvis is able to analyze the correlation between two vectors by calculating their similarity distance.
+ If the two embedding vectors are very similar, it means the original data sources are similar as well.
+ Why did Nvidia choose Milvis for our canonical models vector database? Because it supports our raft accelerated library of composable building blocks for accelerating machine learning algorithms on the GPU.
+ Support for Nvidia GPUs brings the ability to support heterogeneous computing, which can significantly accelerate specialized workloads.
+ With GPU support, users can expect faster and more efficient vector data searches, ultimately improving productivity and performance.
+ Milvis has the GPU acceleration on the retrieval side, which means scaling to many documents is going to perform better.
+ As we said before, the RAAG process is not locked to specific third-party software.
+ As such, there are other vector databases that integrate Rapids Raff for GPU acceleration.
+ They include Chroma, FA, I, SS, Lance, or you can use other pay-as-you-go databases such as Redis, Pinecon, and MongoDB, V-Core.
+ While all example uses Milvis, you can make your own choice.
+ Let's learn a bit about raft.
+ Nvidia's raft is a library of composable building blocks for accelerating machine learning algorithms on the GPU, such as those used in nearest neighbors and vector search.
+ A and N algorithms are among the core building blocks that comprise vector search libraries.
+ Most importantly, these algorithms can greatly benefit from GPU acceleration.
+ For more information about Raff's core APIs and the various accelerated building blocks that it contains, see reusable computational patterns for machine learning and data analytics with Rapids Raff.
+ The link for this source can be found in the course details page.
+ Last in the pipeline is the trained LLM.
+ In Nvidia, we chose Meta's LLM2, a family of pre-trained and fine-tuned LLMs, LLM2 and the LLM2 chat.
+ It scales up to 70 billion parameters.
+ LLM2 chat models generally perform better than existing open source models.
+ LLM2 is pre-trained using publicly available online data.
+ An initial version of LLM2 chat is then created through the use of supervised fine-tuning.
+ Next, LLM2 is iteratively refined using reinforcement learning from human feedback, known as RLHF, which includes rejection sampling and proximal policy optimization or PPO.
+ Together with Nvidia's Triton interface server, the optimized LLM can be deployed for high performance, cost-effective and low latency inference.
+ Triton's inference server is software that streamlines AI-infrancing.
+ In the canonical RAG example, LLM2 accepts the prompt format from LLM2-promp template, which we manipulate to be constructed with the system prompt.
+ The set of instructions we provide the LLM to tell it how to behave.
+ The context is the retrieved data from the vector database, the user's question or prompt.
+ Let's watch a video giving us an overview of Triton.
+ Entitled top five reasons why Triton is simplifying inference.
+ Image search.
+ Personalized movie recommendations, the voice assistant in your smartphone, the fraud detection in your bank, AI is everywhere.
+ Making possible the consumer services and enterprise applications we rely on every day.
+ But to be useful, it needs to be fast, accurate and scalable.
+ With Nvidia Triton inference server, teams can simplify the deployment of their AI models and scale with ease.
+ By removing the guesswork, this open-source software frees teams to focus on their models and applications, not their deployment.
+ Here the top reasons Triton is simplifying inference.
+ Triton works with all major frameworks, including custom backends, giving developers the freedom to choose and consistent performance they can rely on.
+ Triton supports any query and use case.
+ It's optimized for real-time, batch, audio streaming, and model ensemble inferencing to meet any inference need.
+ It can be deployed on any platform, CPU, GPU, data center, cloud, or edge.
+ It is the universal inference server regardless of platform.
+ Designed to meet the needs of both DevOps and MLOps, Triton enables the rapid, reliable deployment of AI models into large-scale production.
+ It integrates with Kubernetes, KF serving, Prometheus, and Grafana, as well as AWS SageMaker, Azure ML, Google Cloud AI platform, and others.
+ Triton is optimized for both GPU and CPU utilization, delivering high throughput and low latency for any inference need on any system.
+ Find a simple, fast way to deploy your AI models into production at scale.
+ To learn more about Triton inference server, click on the link in our bio.
+ We've covered a lot in this short video.
+ Now let's sum up what we have learned.
+ First, there are advantages to incorporating RAG into your Gen AI LLM pipelines.
+ RAG empowers your LLM with real-time data access.
+ RAG systems can be more accurate because of its access to real-time data and domain-specific knowledge.
+ This is beneficial in cases where accuracy is critical, like legal documents and medical diagnosis.
+ RAG mitigates LLM hallucinations.
+ RAG's are inherently less vulnerable to hallucination because each response is grounded in retrieved evidence.
+ RAG identifies relevant facts from the external or internal knowledge source before the generation phase.
+ RAG enhances the transparency of AI-generated responses.
+ RAG can cite the sources used to generate responses.
+ This is especially valuable in legal or academic context.
+ RAG preserves data privacy.
+ RAG systems leverage internal knowledge sources making them independent from large language model training requirements.
+ Sensitive data can be kept on apprentices.
+ Of course, RAG is not a panacea.
+ There are disadvantages.
+ Implementing a RAG pipeline requires significant technical proficiency, including setting up the retrieval mechanisms, integrating with external or internal data sources, ensuring data freshness, designing efficient retrieval strategies, and handling of large-scale databases.
+ Improperately implemented RAG pipelines can negatively impact responses by injecting irrelevant information.
+ NVIDIA addresses this by giving you this canonical reference RAG application to start from that we have been talking about throughout this video.
+ RAG doesn't inherently adapt its linguistic style or domain specifically based on the retrieved information.
+ NVIDIA addresses this through model fine-tuning capabilities built into NIMO, which we spoke of before, which can work in conjunction with RAG.
+ Vector similarity search can be slow and choice of distance metric threshold matters.
+ NVIDIA addresses this with GPU acceleration libraries for RAG like RAFT.
+ Worse, sensitive information that could be confidential could service.
+ NVIDIA addresses this with NIMO guardrails integration with RAG.
+ You have also learned about LAMMA index and LANGChain frameworks for LLM applications to ingest, structure, and work with domain-specific data for RAG.
+ Since LLMs are only trained up to a fixed point in time and do not contain knowledge that is proprietary to your enterprise, they cannot answer questions about new or proprietary knowledge.
+ We rely on powerful frameworks like LAMMA index and LANGChain to build our RAG pipelines.
+ We talked about E5 large as an embedding model.
+ Embedding is an important model in a RAG pipeline as it provides a method for us to store and search through our enterprise knowledge base.
+ We introduce you to Milvis and its support for NVIDIA RAFT RAFT, which stores indexes and manages massive volumes of embedding vectors.
+ With GPU support, users can expect faster and more efficient vector data searches, ultimately improving productivity and performance.
+ And we touched upon Meta's open source LAMMA2 optimized by NVIDIA TRT, LLM, and served via NVIDIA's Triton inference server.
+ Here are a few resources to help you get started on your RAG LLM journey.
+ In particular, building RAG agents for LLMs should be your next step.
+ There are many other resources listed on the course details pages with their accompanying links.
+ Good luck getting started in using your own data in your AI applications.

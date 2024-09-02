@@ -1,0 +1,40 @@
+----------------------------------------------------------------------------------------------------
+LangChain Part 3: LangChain
+Video URL: https://d36m44n9vdbmda.cloudfront.net/assets/s-fx-15-v1/RAG-Videos/RAG_03_LangChain.mp4
+----------------------------------------------------------------------------------------------------
+ Hello, and welcome back to the course.
+ In the previous video, we talked about large language models, service abstractions, and some pros and cons of various setups and deployments.
+ In the notebook, we took the idea and fleshed it out in code, getting access to a free NVIDIA API key and posting some requests to some of the large models that we had access to.
+ By the end of the notebook, we pulled in some more abstract utilities that integrate the endpoint functions with the chain orchestration framework.
+ And in this video, we'll actually go ahead and flesh this out, talking more about what chain is good for and how we can use it.
+ So to get started, what is chain exactly? We have our endpoints that integrate with it, so what does that mean for us? Well, chain is an open source LLM orchestration framework, which means that it makes special effort to develop tools that work well with LLMs to help multiple models work together in potentially a system.
+ Throughout the ecosystem, there are various tools and pre-built utilities, many of which we will touch upon in this course, but before then, we need to see some main features.
+ You may recall from your own efforts that the most fundamental components of an LLM query are an LLM and its inputs.
+ From that, we can feed the inputs to the LLM to get an output.
+ Starting into that system is usually a prompt template, which specifies additional information, such as system messages, additional instructions that get autofilled, or maybe some extra content that comes in from elsewhere.
+ So at the very least, we'd like to support that, right? LLM chain facilitates this with an abstraction called Runnables, which can be used to stack multiple functions end-to-end to develop pipelines.
+ In the case of our simple prompt to LLM chain, if the prompt template produces a string from a dictionary, and the LLM produces, let's say, an AI message from a string, then the two can be combined together to make a chain that takes a name dictionary and produces an AI message.
+ If we want to then convert that AI message as part of a routine, we could make a quick function to extract the contents of the message and loop it right in.
+ Or we could use a premade LLM chain method that does a bit of extra checks.
+ We'll see that the SDR output parser, it'll be in the notebook.
+ And there we go.
+ We now have a reusable LLM chain expression language component that can do, well, admittedly, the bare minimum we'd expect from a single LLM call.
+ But it is all in one component.
+ So that's pretty cool.
+ And because LLM chain has some methods that the components can support, we can either invoke them all at once, or we can actually stream it and get a progressive generation, which looks better for a user perspective.
+ Though it starts off humbly enough, this concept of chaining is a convenient abstraction, as it allows for us to have much more than a single LLM call in a single modular component.
+ It enables the creation of a complex system, where inputs can be processed in multiple steps, each one potentially using different LLMs, with maybe some Python functions thrown in to make explicit modifications.
+ This is where LLM chain really starts to shine.
+ As an example, let's say that instead of merely passing an input through a single prompt template and an LLM, we can create chains that involve multiple stages of processing.
+ You could take the input message and use an LLM's output to route it to a special LLM chain with certain messaging, or maybe to a different function, or really how you'd like.
+ Alternatively, maybe you want to bake in an automated response when certain conditions are met, in which case you'll probably want to have this be a streamable component that breaks out of the chain and hits the user directly.
+ All of this can be done with some combination of pre-madeed LLM chain modules and custom components that can be made to work with any model.
+ Throughout the next notebook, you'll get to play around with all this, and you'll be able to make some interesting systems that can do both the external reasoning that goes directly to a user, probably streamed, and also you can do internal reasoning, which will happen behind the scenes, generating some hopefully easy to process outputs that will be used by Python code or another system as part of additional reasoning.
+ This will allow us to really elegantly break away from relying on a single LLM as a source of knowledge, and incorporating our own priorities, context, and restrictions into the loop.
+ Under the end of the notebook, you'll also get to experiment with some strong LLM chain integrations, including Gradio, to make customizable interfaces, and LLM serve, to serve these chains over a port interface.
+ This notebook will introduce you to the actual proper front end, as well, which is a component that is perpetually running inside of your course container.
+ This part will be required for your final assessment, and the strategy that is used to actually finalize and submit the final assessment will involve using LLM server outs.
+ So keep that in mind, and try to understand what's going on on the front end server.
+ The code there is quite plentiful, and it is a real example of how you might want to start up a web service, and have it interfacing with large language model applications.
+ Regardless, there should be plenty of cool things to check out, so hopefully you enjoy the notebook.
+ Good luck, and see you in the next video.

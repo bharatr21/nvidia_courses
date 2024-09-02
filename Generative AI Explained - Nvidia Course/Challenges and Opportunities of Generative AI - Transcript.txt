@@ -1,0 +1,129 @@
+----------------------------------------------------------------------------------------------------
+Challenges and Opportunities of Generative AI
+Video URL: https://dli-lms.s3.us-east-1.amazonaws.com/assets/s-fx-07-v1/task4.mp4
+----------------------------------------------------------------------------------------------------
+ I've talked a little bit about what generative AI is.
+ I've talked about some of its applications.
+ I've talked about some of the technologies that are used to build it.
+ Now I'd like to talk about some of the challenges and some of the things that I think we still have to work on before generative AI is fully deployed.
+ One of them, obviously, is that generative AI is often wrong.
+ So when we look at the output, whether it's an image or a video or a text or anything else, the models are often very confident.
+ They're producing things that are plausible, but they might be very incorrect.
+ So for example, if you ask a question to one of these models, you're not guaranteed to get an answer that's factual.
+ And that's a problem when we're thinking about how these models are being deployed.
+ And I think the research community is coming up with a lot of different ideas to make these models more factual and more reliable.
+ And we're going to see a lot of progress along those lines.
+ One of the reasons I'm so confident about this is just that I've been working in the space for long enough and I've seen the extraordinary amount of progress that has happened over the past 15 years in order to get us where we are today.
+ And I think we've overcome just such enormous challenges to make the models that we have today.
+ And I think we still have enormous challenges to fully develop the promise of these models.
+ But there's so many smart people working on this.
+ I think we're going to see a lot of progress.
+ The training data is also really important and is a challenge for generative AI.
+ So in a number of ways, one of the problems with training data, we're building these models by collecting as much data as we can from all the different sources we have access to.
+ But there's going to be sort of correct data and incorrect data.
+ There's going to be biases in the data because that's what happens on the internet.
+ There's all sorts of qualities of data and different ideas that people have, some of which are correct, some of which we disagree with, some of which are harmful, and some of which shouldn't be expressed.
+ And so how do we find all of that? How do we sort it? How do we make the models robust against that? That's really important.
+ And then, of course, how do we correct for biases that we find? But there's other challenges as well.
+ One of the things that is, I believe, true about data is that the more valuable a data set is, the more proprietary it tends to be.
+ And that needs to be so.
+ For example, medical data is very valuable.
+ But it needs to be kept private because we've agreed as a society that medical data shouldn't be just randomly shared on the internet.
+ And that's really important to us.
+ And so it's not a good idea to train a model on all sorts of proprietary data that should be kept confidential because we don't know how to train these models to keep secrets.
+ We don't know how to train these models, how to observe confidentiality.
+ And so that means that there's going to be a need for these models to be specialized in private ways that allow the models to solve problems in new areas that are enabled by proprietary and confidential data.
+ But that maintains the confidentiality of that data.
+ And I think that's a big challenge for generative AI.
+ And we're going to have to do some work to figure out how to make that happen.
+ We also have other pretty significant challenges as well.
+ So IP ownership, there's been some controversy.
+ Maybe you have seen some of it about some of these images synthesis models that have been trained on all of these 5 billion images from the web.
+ The problem is that some of those images, the artists or the photographers or the people that created those images, would really prefer that their image not be included in one of these models.
+ Because if the model is able to extrapolate or reproduce something that reminds a creator of the work that they've done, but they're not getting credit for it or they haven't consented, then that's a big problem.
+ And this also has to do with a lot of commercial applications.
+ So for example, if you're building a model, let's say, for example, that's doing personalized advertising for your particular brand, you want to make sure that the model is only going to output images and text that correspond with your brand identity and your brand values.
+ So for example, if you're making a model to advertise for Marvel Comics, it would be really bad if the model started advertising for Disney, because that's not what you've built a model to do.
+ And also, it would be a violation of copyrights and trademarks.
+ And so there's a lot of challenges regarding these models because the way they get their power is by being trained on such large amounts of data.
+ But that also means that they can sometimes be difficult to focus.
+ And so it can be challenging to prove that a model is going to be safe to use and is going to reflect the purpose for which it was designed.
+ And so we have a lot of work to do both in terms of training custom models that are more restricted, but still useful, as well as building and safeguards so that the models are more controllable and also aligning the models with human preferences so that they're safer to use.
+ So this is going to be ongoing work.
+ And I don't think that it's easy work.
+ And I don't think it's ever going to be fully completed.
+ But at the same time, I know that we're making a lot of progress and we're finding more and more applications where we can be confident that these models can be deployed.
+ One of the biggest challenges with generative AI is training and deploying the models, because they have to be trained on such a large amount of data.
+ And the models themselves are quite large and have a lot of parameters.
+ So NVIDIA has been working with the rest of the industry for a long time in order to optimize every part of the stack that's necessary to train these models.
+ And I like to talk about that in a little more detail.
+ So NVIDIA Nemo is our collection of frameworks for training models for the enterprise.
+ And we have been optimizing its language model training speed very significantly over the past few years.
+ For example, when we're training large language models, we can get above 50% of the theoretical peak speed of the tensor cores of the machine when we're running on thousands of GPUs at once.
+ And that's an extraordinary achievement that required work from thousands of people at NVIDIA and across the industry in order to optimize every part of the stack.
+ The tensor cores, the processors on the GPU, the caches, the memory subsystem of the GPU, the interconnect between GPUs inside of a box, the CPU GPU connection, the software that's running between them, the networking in between box is in a data center and the entire data center architecture.
+ The frameworks, the application frameworks, all of that has a ton of technology that comes together in order to provide transformational speedups for language modeling.
+ And we've been investing for a long time in not just performance, but also flexibility for these frameworks because it's not enough to have software and hardware that works together to train the model of the past.
+ But we need to enable people to train the model of the future.
+ And if there's one thing that we know about Genre2VI, it's that it's changing rapidly.
+ And the systems of the past, the models of the past, are not the same as the models of the future.
+ And so we have been working really hard in order to provide both incredible efficiency as well as incredible flexibility for researchers building the technology of the future.
+ Deploying Genre2VI is also a huge challenge.
+ And perhaps some of you have experienced this when using some of the demos and prototype systems that are out there.
+ The speed that it takes to generate an image or to generate text can actually slow down the way that we use them and add friction.
+ And it's clear that if we were able to reduce the time that it takes to generate samples from these models, then we could actually see these models more widely deployed.
+ It's also interesting that in the past, we've designed systems with training as the main focus because the goal was to generate technology that had never been created before.
+ And that required an enormous investment in training.
+ But now that these models are starting to be widely used and they're so general, we're starting to see that the compute is shifting towards inference.
+ And that's an exciting challenge, I think, for the industry to figure out how to make these models as efficient as possible to deploy so that they can be deployed as widely as possible.
+ And perhaps you've heard of the Javons Paradox.
+ It's this idea that if you can make something cheaper to use, then the aggregate demand is going to increase.
+ And that's been observed in many different fields and economics over the centuries.
+ And I think it applies to generative AI as well, which means that the scale of application of these technologies is going to be super linear as a function of the efficiency that we can deploy them with.
+ So if we can make it just a little bit more efficient to deploy, there's going to be dramatically more new applications for this technology.
+ Sometimes it's even better to use an API rather than deploying a model yourself.
+ And Nvidia is working on that as well.
+ We've been talking about some of the APIs that we're creating for NIMO and Picasso and BioNIMO.
+ And these models are running in various clouds that we can provide access to.
+ And I think going forward, we're going to see lots of companies including Nvidia, investing and building APIs and infrastructure for various companies to deploy generative AI and customize it for their own business uses.
+ Generative AI is bringing us into a new kind of economy that is a post-sterecity economy for intellectual work.
+ It's shifting our efforts into a higher level of abstraction.
+ The amount of content is becoming less important.
+ Maybe you remember when you were in school, your teacher would say, please write a 10-page paper about something.
+ Now, why did they ask you for 10 pages? Well, part of it was reflecting the truth that in order to express an important idea, it needs to be fully elaborated and that takes up space.
+ Part of it was reflecting the work that's required in order to actually come up with ideas that could fill that space.
+ And so many of us were used to the idea that the size of the content that we created was correlated with its value.
+ And I think that's true, and it still remains true.
+ But it's also the case that in a world with generative AI where we can create content, whether it's text or other things very easily, the size of the content is going to be much less important than the value of the ideas, the quality of the ideas.
+ And I think that's an exciting development.
+ I think what it means is that instead of thinking so much about, have we been able to produce a certain amount of content, we're going to be focusing more on the purpose of that content.
+ What it means, how do we react to it? Does it resonate with us? What does it teach us? Is it factual? Is it correct? Is it arguing something that can teach us something? And I think that having tools for us to augment our ideas and elaborate on them with AI is going to help us explore our ideas more deeply and then ultimately learn new things as a society.
+ So I think that's going to be really exciting and important.
+ It's going to yield more productivity for all of us that are doing intellectual work.
+ We also have to think about what the framing for the model is.
+ I've seen it many times when deploying AI and Nvidia that the difference between success and failure for a particular model can depend on the inputs and the outputs to the model.
+ The model itself might be a good model, but if it's deployed with the wrong input, it's going to yield bad outputs, and it's going to be insufficient for the task.
+ And genotape AI is no different.
+ There's an enormous amount of work that goes into figuring out how a model can be deployed.
+ Sometimes we call part of this work prompt engineering.
+ So with any of these text models, whether it's text-to-image models or language models, there's various ways of posing the question.
+ There's various instructions that you could give the model in text in order to tell it what you want and influence the result.
+ And the process of exploring how to describe instructions to the model in order to get the result you want and how to prepend instructions that help people solve particular kinds of problems in particular domains.
+ We call that prompt engineering, and that's pretty important.
+ For a lot of the images in my talk, I've been using a generative model.
+ And the quality of results that I get from the generative model really depends on the quality of the question that I ask.
+ And so there's a new kind of skill, a new kind of creativity that comes in interacting with these models where you figure out how to ask questions in more useful ways.
+ And that is going to be valuable.
+ People that play with these models and learn how they work are going to be able to get more done with them.
+ We also have a lot of investment going into guard rails.
+ And this is kind of models maybe that surround the central model or heuristics that provide more safety, more fact checking, more control over IP ownership.
+ And I think we're going to see more investment of these over time as well.
+ The central challenge of generative AI is control.
+ You have a very powerful model that can generate anything.
+ But you only want it to generate some things.
+ It's hard to say exactly what you want to generate it.
+ How do you describe to the model? How do you create an environment where it's safe to use that model? That's the central question that we're working on.
+ And there's a lot of investment going into guard rails around the model.
+ And I always think it's worthwhile to remember this quote from George Box, who is a famous statistician who said that all models are wrong or some are useful.
+ And the question is how do we make these generative models useful? There's a lot of work that goes into how the model is deployed that doesn't actually have to do with the model itself.
+ But the framing around it that's critical in order to get something actually solves a problem.

@@ -1,0 +1,53 @@
+----------------------------------------------------------------------------------------------------
+Documents and Embeddings Part 5: Working with Documents
+Video URL: https://d36m44n9vdbmda.cloudfront.net/assets/s-fx-15-v1/RAG-Videos/RAG_05_Documents.mp4
+----------------------------------------------------------------------------------------------------
+ Hello, and welcome back to the course.
+ In our previous section, we introduced and explored the use of running states to develop more dynamic modules that progress their states over time.
+ Using this, we were able to keep a running conversation history and eventually perform retrieval through slot filling or argument prediction strategies.
+ Building upon our skills from the previous notebook, this video will escalate our challenge to the realm of documents, which is probably what you're actually here for.
+ In a world where chat models are trained on giant repositories of public data and retraining them on custom data is prohibitively expensive.
+ The idea of having an LLM reason about a set of PDFs, a YouTube video, or even a directory is extremely enticing.
+ If you are a company, you could in theory preload an LLM's context with all the information you would want, maybe a chat bot's intended role, domain, company policies, etc.
+ And you can just ask for it to reason about it as necessary, right? On the other hand, you could also open up your chat bot's context space for employees or users to upload their own documents to be able to chat specifically about the resources they provide.
+ Now, these are all great ideas and things that you definitely can do, but unfortunately, we still don't have all of the skills necessary to do this.
+ One of the issues that you'll encounter relatively early on is the fact that loading a document is kind of ambiguous.
+ There's a lot of kinds of documents, how do we support different ones, etc.
+ And for this, luckily, we actually don't need to worry too much.
+ Frameworks like Lengchain and Lama Index have already created a lot of connectors for us to be able to use.
+ And these range from something as simple as a text processing API to a PDF encoder to potentially even a transcription service.
+ These connectors are already very flexible and very easy to use, and you can actually create your own if you'd like.
+ So luckily, this one will not be that big of an issue for us.
+ The main problem that you will encounter with document reasoning with large language models is the size of the input that you're allowed to put into an LLM.
+ When the majority of your input is going to be the context and the question is only a small piece of it, then the large language model can forget plenty of details.
+ To help us reason with large documents, we generally will need to chunk our inputs into smaller pieces and then try to work from those.
+ If we have a large PDF file, maybe with hundreds of thousands of tokens, we'll want to split it up into maybe a thousand tokens per chunk, or maybe even less in order to give our large language model some ability to work with an entire document segment.
+ Once you have your smaller chunks, you can try to do something about them in order to provide your LLM with some information.
+ One very common thing that people do is to stuff a selection of small documents into their prompt for the LLM to reason with.
+ We'll find it to a later to actually select these kinds of documents to insert strategically, but for now, we don't really have that tool yet and any strategy that we do would just be a naive subset.
+ So this is not quite sufficient for our use case yet.
+ Another thing that we can do, and this one is a lot more practical and something that you should already know how to do at this point, is we can just take all of our little chunks, feed them into our large language model one or two at a time, and try to just consolidate a little bit, make it smaller, and try to summarize somehow.
+ One way you could do it is using a MapReduce style chain, in which case you are literally going to be taking every single chunk and trying to do a homogenous operation on it.
+ So maybe just summarize, summarize, summarize.
+ Totally a valid approach.
+ It's a naive start to some later processes later down the road, but on its own, it's kind of weak as you've probably expected.
+ However, a refinement chain is going to be quite similar to what you were doing earlier with dialogue management, but this time just applying it to a set of chunks.
+ So with a refinement chain, it's pretty much the same idea where you have a knowledge base that you accumulate over a period of multiple document chunks, and after every chunk, you just update your knowledge base with more information about the overall system.
+ Using this, it becomes really easy to do something like summarize a document or extract the main ideas, or even to consolidate with most important chunks.
+ So this one might actually be a strategy you can use for later on when you find out how to do chunk retrieval is it will be nice if we can use an L as a preprocessing step to consolidate the amount of information available about our documents into small little pieces of very dense information.
+ Going a little bit beyond as a simple refinement, you can do more strategic types of refinement at various granularities to try to create a knowledge graph.
+ The goal of a knowledge graph is to have some kind of representation where you have information that is either hierarchical in nature, meaning that you can traverse from a abstract component to a more specific component to maybe even the document chunks, or it means that everything is connected with some kind of edges, meaning that you can branch off from one component to another component and try to explore the space of chunks in a strategic fashion.
+ Once you have a knowledge graph, you can try to do actual retrieval with large language models using some kind of an agent formulation.
+ As an example, let's say that you want to have a chatbot that can read books, right? So what you can do is you can try to have a refinement chain that aggregates chapters and big summaries, and then also with associated with a chapter are all of the chunks of that chapter.
+ Then from there, you can have some kind of refinement chain on the chapter contents, and you can have other kinds of refinement chains related to name processing and abstraction processing.
+ Creating your own knowledge graph system is unfortunately quite a laborious process, but might actually be worth it if you have a very specific kind of domain that you're tackling, or a very specific kind of document that you are always going to be using.
+ So if you're always going to be using books as your input, then maybe it's worth it to create some kind of a knowledge graph preprocessing step.
+ If your use case is much more general, this is probably not the way to go unless you wanted to use a more sophisticated technique, such as vector guided graph construction, which you can read about in the blog post below.
+ All right, now that we're done with several different kinds of abstractions that we can use to handle document processing, we're ready to actually start with the notebook.
+ The notebook will actually more or less extend the same ideas from the previous one on dialog management with running state chains, but this time we'll just analyze a document and try to summarize it progressively using the same looping structure we just discussed.
+ The end result will hopefully be a coercion of the document from a long format research paper down to a simple summary with some bullet points just because they can be there.
+ These bullet points actually do have a utility, which is to try to coerce the information out of the chunks without always having to contribute very harshly to the overall main summary.
+ Hopefully you'll find this to be an interesting section and pretty good practice for the things that you've already been doing.
+ In the next video, we will cover the other technique that we've kind of been alluding to.
+ In addition to document refinement, we will also be looking at document retrieval, so stay tuned for that.
+ Anyways, now is a great time to get on with the next notebook, so good luck and see you in the next video.

@@ -1,0 +1,66 @@
+----------------------------------------------------------------------------------------------------
+Applications of Generative AI - Other Modalities
+Video URL: https://dli-lms.s3.us-east-1.amazonaws.com/assets/s-fx-07-v1/task3.mp4
+----------------------------------------------------------------------------------------------------
+ Okay, so I've been talking about language and now I would like to talk about some other things.
+ So, text to image models have been really exciting.
+ Image to image models where we can recent the size images and edit them.
+ We're also seeing a lot of text to 3D models.
+ So for example, this 3D object was created with a text input saying, you know, make me a 3D model of an astronaut.
+ When we're thinking about the omniverse, when we're thinking about virtual worlds and how people are going to interact with each other to solve problems in the omniverse, it seems clear that generative AI is going to be a big part of that because this virtual environment is going to be populated by content that we create using generative AI.
+ Generative AI can also apply to other forms of data, for example, speech and video.
+ Here's a couple examples of speech.
+ The first is where we've taken a small amount of data.
+ We have a TTS model, a speech synthesis model, that's been trained on a vast amount of data from thousands of speakers.
+ And then we can take a small amount of data, say, for example, data from my voice where I spend a half an hour recording in a studio to get a custom voice and then recent the size, let's say, my voice in English, the language that I'm natively speaking, but then also allow me to speak in a new language.
+ So here's a sample of speech synthesis in the native language of a speaker that was given just a small amount of data.
+ They say it's darkest before the dawn.
+ We've been in this town for far too long.
+ And then without having to teach that person how to speak Hindi, we can enable that person to speak in Hindi using another generative model.
+ So there are many different forms that generative AI can take, many different modalities.
+ And the interesting thing is that they're starting to compose and conjoin.
+ So I was talking earlier about how language models can use tools.
+ Well, we can also connect language models with image synthesis models, 3D synthesis models, speech synthesis models, video synthesis models, in order to make models that can understand and synthesize content in all sorts of different modalities.
+ And I think that's going to be a trend for the next year or so.
+ And how does this composition work? Well, the composition happens through embeddings.
+ And I'm going to give an example from image embeddings, which are able to connect images and text.
+ This one again comes from OpenAI.
+ It's called Clip.
+ And the idea is that if you are able to collect a large training set of images with captions, maybe just very simple captions that describe what's inside the image, you can do a training step where we create an abstract space that's just a bunch of vectors, where we project each of these images and each of these text examples into the same space using a neural network.
+ And then when we train the neural network, we are actually training it so that if you have a label for a particular image that it has the same embedding in this vector space.
+ But if you have an image and a label that don't belong together, then they should have a very different embedding in the vector space.
+ And so that's a very simple rule to train a neural network like, are these things the same? Then try to make their output the same.
+ If they're not the same, try to make their output different.
+ We can describe that mathematically and then train a model on a huge amount of data.
+ And then we have an embedding.
+ So then when we want to actually use this embedding, we can use it with text.
+ For example, we can take that text and embed it into the space.
+ And then we can use an image synthesis model to go from that embedding space back to an image.
+ Or we can do it the other way around.
+ We can use an image and put it through that space and get a vector out of it that then can be turned into text, which we could then use for, for example, to understand the contents of images.
+ And because these things are all very general, you know, you could imagine these being composed into neural networks that actually can understand and generate data from all sorts of different kinds of domain.
+ And this is made possible by vast amounts of data.
+ So for example, the lion 5B data set contains about 6 billion images with text.
+ About 2 billion of those images are actually paired with English text that describes what's inside about 2 billion are from 100 other languages.
+ And then there's about 1 billion images that don't really have a language attached to them.
+ It's just like, for example, the name of some object, which isn't really specific to any language.
+ And so this just gives you a sense of the scale of the data that's required to build these foundational models that are able to embed text and images into the same space.
+ But now that we have those embeddings, then we can start to do some amazing things.
+ And here's some examples of text to image generation from Nvidia's edify models that we've been working on.
+ I think, you know, these models are so exciting because they allow us to explore new ideas using visually explore new ideas using text.
+ And for those of us like myself that are not artists, it's really quite challenging to come up with new images that describe ideas that I'm thinking about because I just don't have the technical skill to paint.
+ But these models are actually able to compose ideas and then generate images of new things that, you know, I might be interested in.
+ But the models can do more than just text to image.
+ Here's an example of using the model to actually control the output of the image on the left.
+ The person is drawing kind of a cartoon of where different kinds of objects go.
+ And the number of different kinds of objects is unlimited because each of those objects are just being described using language.
+ So for example, there's the rabbit mage, there's a fireball, and then the rabbit sitting on clouds.
+ And then the text that goes along with it describes the entire scene, but we're controlling it with this cartoon that gives the model an idea of where something should go.
+ And, you know, so this is an exciting new capability for these images synthesis models because now I can actually build images where things are in the positions that I have chosen.
+ And again, this all happens through the magic of these huge models and huge embeddings.
+ These models can also synthesize things using style references.
+ So for example, we're going to take a famous painting from Vengo as long along with some text that describes a scene and use that to synthesize a new image that has all the elements that we wanted, but looks like another image.
+ Here's some outputs from the magic 3D model that Nvidia has been working on.
+ And, you know, this is pointing to these models working in other spaces besides images.
+ In this case, we're making 3D geometry.
+ And you can imagine that these 3D objects could be painted with textures and shadows and materials that were derived also from generative models in order to create new kinds of objects that could go into a virtual world like the omnivores.

@@ -1,0 +1,92 @@
+----------------------------------------------------------------------------------------------------
+Environment and LLMs Part 2: LLM Services
+Video URL: https://d36m44n9vdbmda.cloudfront.net/assets/s-fx-15-v1/RAG-Videos/RAG_02_LLMs.mp4
+----------------------------------------------------------------------------------------------------
+ Hello, and welcome back to the course.
+ In the last session, we introduced the course notebook environment and got onboarded into how it's all set up and what you can do to work with the content.
+ Now, let's shift our focus to actually the content, specifically how to integrate large language models into this setup.
+ As you saw in the environment notebook, our course primarily utilizes a CPU-based environment, which is actually really common in consumer devices and is really representative of what you can assume out of an average user.
+ This accessibility is a plus, but it is also presenting some key challenges when we're aiming to actually run LLM models.
+ An ideal scenario with a robust data-centered GPU, experimenting with whatever LLM's you'd like, becomes quite feasible.
+ You can run, modify, and even dissect these models to your heart's content, and design whatever systems you might need to support your specific use cases.
+ However, for most users, a more modest setup might involve a consumer-grade GPU or even just a CPU.
+ In such cases, we'll need to actually make adjustments like model quantization and limited resource schemes in order to make even a single model run, much less a lot of models.
+ This brings up to a popular solution in AI development, which involves the use of cloud-based endpoints for accessing LLMs.
+ These endpoints are hosted on scalable server farms like Nvidia DGX systems and enable us to leverage powerful models without burdening individual users with steep system requirements.
+ Services like the OpenAI API and Nvidia's NGC platform are able to load in large models and run them perpetually behind what's known as a query router interface.
+ The goal of a query router interface is to limit the use of the models to specific users, restrict what the users can actually do with the models, and also organize the requests to keep the models operating at maximum efficiency.
+ Prior to this course, you've probably used the OpenAI API to access powerful language models like GPG4.
+ This is an LLM service implementation, which allows you to send messages to powerful, accurate models with many extra layers of functionality.
+ If you've ever used chatGBT, you'd see that the typical user interface does a lot of extra things, like requiring and function calling, to do complex orchestration behind the scenes, which makes it a great tool for even nontitunical users.
+ In this case, for example, I can try to get it to run some Python code and output a graph, and it'll actually do it for me.
+ Even though a language model on its own shouldn't be able to do that, there's various orchestration going on behind the scenes to re-query the model, ask it for specific kinds of formats, ask it to actually interface with an executing environment, and at the end, you kind of get this culmination of functionality with a single request.
+ Now the drawback of using OpenAI's interface comes up when scale becomes an issue.
+ Since these models are not publicly released, they cannot be transitioned to your own computer infrastructure, even when you're ready to do so.
+ This becomes a problem when you need your data to stay within your ecosystem for security, control, governance reasons, or when the price of hosting your own resources becomes cheaper than using a per token billing service.
+ This is where Nvidia AI Foundation models come in.
+ In contrast to OpenAI's models, the Nvidia NGC service provides state-of-the-art open-source Foundation models, such as Lama II, Mixtrol, and StableDefusion.
+ These models have a clear path towards enterprise deployment and self-hosting, and can be customized and organized as necessary to maximize resource efficiency.
+ In this course, we will be relying on public endpoints from the Nvidia NGC service to implement our chatbots.
+ This service comes with a ton of free queries to help users experiment with the systems and read their setups for deployment at scale.
+ Let's do a quick walkthrough of how to get access to these endpoints, and also what you will be using in terms of codebase and integrations.
+ What you'll want to do is you'll want to go to NGC.NVIDIA.com.
+ I can quickly type this in NGC.NVIDIA.com.
+ This will toss you into this kind of area where you'll have access to a catalog.
+ You will have access to, if you already have an account, console, organization stuff.
+ These are things that you won't necessarily have, actually.
+ But as a guest, you will still have access to the majority of the components here in catalog, including AI Foundation models.
+ As you can see here, we have, looks like, 18 models at the moment, and these are optimized models that are available for general use case out of the box and already pre-optimized for NVIDIA hardware.
+ What we can do is we can navigate to one of these, such as mixed row.
+ At the time of recording, this is a really good model, and probably the one that you would like to use for this course.
+ And from this interface, you can find that there is a playground component, which we will be using a lot of.
+ There is an overview component, which shows just what exactly this model is and how to get started with using it.
+ And there's also related collections.
+ If there are models that are hosted here and have specified containers or other resources that attach to them, they'll be listed here.
+ There is nothing important here right now, though.
+ So let's go back to playground.
+ From here, you can see that there is a demo application, which is hosted in the back end using Gradio, which you will get to experience throughout this course.
+ And we can do things like send a message, write a thing about a thing.
+ Let's just use the example.
+ What is the history of the internet with a temperature argument, a top PR argument, and a max output tokens argument? So it's just kind of going through, generating a response.
+ Looks good to me.
+ This is, of course, a very lightweight playground environment, not very useful on its own, aside from just trying models out and seeing how they work.
+ In contrast, what we'll be using in this course will be the API component.
+ When you called the demo section earlier, you were invoking a function endpoint.
+ So somewhere in NGC, this model is actually being hosted in a scalable fashion already optimized for users to load requests in and get responses out.
+ If you were using a shell interface, you could use something like curl to post to that endpoint directly.
+ This is an example of the URL associated with this function.
+ There's also some header information specifying who you are.
+ So this is API gating.
+ And there's also components here specifying what kind of stream you expect.
+ So this will be different between streaming and non-streaming.
+ And down here, you will see the actual data that we're trying to pass into our function endpoint, which will include what we want as the user input, what the role is, and some hyperparameters for the generation.
+ In our course, we'll be using Python.
+ So this is probably not the best set of code to be running.
+ Instead, we can go over to the language and we can go into Python.
+ This will give us a streaming solution that is more requests library oriented.
+ So everything is specified in Python.
+ And at the end of the day, you have a response getting component.
+ So we have requests.
+post.
+ You can post the invoqrl.
+ You can post the headers and the payload.
+ And you can stream it.
+ And this will give you a response.
+ So this is the interface that we will roughly be using under the hood of our calls that we make.
+ Later on in the course, we will be doing something a little bit different.
+ We will instead be using a Langchain integration called Langchain NVIDIA AI endpoints, which can be installed using a simple pip install and can be used to access the endpoints in a much more streamlined, pathonic, and actually Langchain oriented API.
+ So if we wanted to invoke Mistral, so if we wanted to invoke the mixedral model that you saw earlier using this API, you need to specify your NVIDIA API key right here.
+ And you would need to import chat NVIDIA from the Langchain NVIDIA AI endpoints library.
+ From there, you can construct your client component.
+ This is a chat model right here, which will interface with the endpoint directly.
+ And you can use the Langchain commands like invoq or stream to actually get nice results out of your model.
+ This example actually does not have those results, but I'm sure if I go down here to NVIDIA Foundation endpoints the full version, it will give me an example invocation.
+ So write a ballot about Langchain.
+ You can print the content of the results, and this will get you a ballot about Langchain.
+ There is more information in this link, and this will be provided in the notebook, of course.
+ So you'll be able to get started with not only the notebook components of this course, but also the documentation which was written in a very similar fashion.
+ So hopefully this is not going to be too bad, and you'll have a fun time with it.
+ Getting back to the slides, we'll be using the next notebook to Enramp towards using the service, making sure that you're able to access the endpoints and query the results, and also even interact a little bit with the NVIDIA Langchain integrations.
+ For the remainder of the course after, we will be using Langchain almost exclusively to integrate with more abstract systems and create powerful agents.
+ There are also other tools aside from Langchain that we could expand into, and there are additional resources at the end of the course to try to do that.
+ Anyways, now is a great time to get back into the notebook, so hope you enjoyed it, and see you in the next video.

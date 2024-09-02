@@ -1,0 +1,28 @@
+----------------------------------------------------------------------------------------------------
+Introduction
+Video URL: https://d36m44n9vdbmda.cloudfront.net/assets/s-fx-15-v1/RAG-Videos/RAG_00_Intro.mp4
+----------------------------------------------------------------------------------------------------
+ Hello, and welcome to the NVIDIA deep learning institute course on building Rage agents using LLMs.
+ In this course, we'll learn how to make sophisticated chatbots that can perform general dialog management and retrieval augmenting generation at scale.
+ Using a tool set of model orchestration techniques, we'll be able to make systems that can manage, retrieve, and incorporate information from a pool of available resources, and also steer conversation in useful directions to make them actually viable in practice.
+ If this sounds interesting, then you're in the right place.
+ Throughout this course, we'll be testing out foundational large language models from the NVIDIA AI Foundation endpoints.
+ Using these, we'll be able to implement some interesting dialog agents using an open source orchestration library called Langchain.
+ By the end of this course, you'll have a thorough understanding of how to develop and deploy custom agent applications, including scaling them for wider use and optimizing them for various deployment strategies.
+ Whether you're a seasoned application developer or are just starting out with this kind of field, this course will get you a solid grounding in chatbot development and give you plenty of tools to operate on the cutting edge.
+ For a quick table of contents, we will start out with some introductions to the course environment and available LLM resources.
+ From there, we will cover Langchain with a focus on building LLM systems for dialog and document parsing, before finally finishing off with document retrieval and agent evaluation.
+ Near the end, there will also be an assessment component, which will ask you to integrate a rag agent of your choice, and run it through a custom evaluation process.
+ Before starting this course, we do expect some prerequisite comfort with chat LLM's and a strong background in Python development.
+ We will be building some pretty involved systems throughout the course, and the topics will be using some more advanced Python structures, so having some comfort ahead of time would be ideal.
+ If you find yourself struggling through the material, would recommend trying out the DLI Prompt Engineering course or some of the deep learning.
+ai Langchain courses as on-ramp.
+ Let's talk about the course format.
+ The course is structured with videos to help motivate some topics, but the main material on this course will be the hands-on Jupyter notebooks.
+ Clicking the play button beneath the video will launch a course environment with a series of notebooks that correspond to the videos.
+ These notebooks are there to flesh out the lecture material and offer some admittedly rather involved exercises in organizing and changing large language models.
+ The notebooks should work in most CPU-enabled environments, including Google Colab, so you're free to download them and run them as you please.
+ Of Note, the last notebook does have an assessment again, so this will actually require you to run that component in the course environment to get credit.
+ Aside from that though, and if you select notebook components here and there, most of the exercises can be done in full in whatever environment you prefer, so feel free to pick and choose.
+ Awesome! Now that you know what all is going on, we can get started with the material.
+ Go ahead and spin up your course environment if you haven't already, and I'll see you in the next video.
