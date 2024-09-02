@@ -48,6 +48,7 @@ def transcribe_video(mp4_title, mp4_url):
     with open(f"{mp4_title} - Transcript.txt", "w+") as f:
       f.write('-' * 100 + '\n')
       f.write(mp4_title + '\n')
+      f.write(f"Video URL: {mp4_url}" + '\n')
       f.write('-' * 100 + '\n')
       for sentence in transcription.split('.'):
         if sentence:
