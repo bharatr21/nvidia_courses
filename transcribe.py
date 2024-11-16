@@ -60,7 +60,7 @@ def transcribe_video(mp4_title, mp4_url):
     return result['text']
 
 # Usage
-mp4_title = "Environment and LLMs Part 1: Course Environment"
+mp4_title = "Environment and LLMs Part 1 - Course Environment"
 mp4_url = "https://d36m44n9vdbmda.cloudfront.net/assets/s-fx-15-v1/RAG-Videos/RAG_01_Environment.mp4"
 transcription = transcribe_video(mp4_title, mp4_url)
 print(transcription)
