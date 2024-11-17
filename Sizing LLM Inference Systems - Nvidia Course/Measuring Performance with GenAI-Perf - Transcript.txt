@@ -1,0 +1,29 @@
+----------------------------------------------------------------------------------------------------
+Measuring Performance with GenAI-Perf
+Video URL: https://dli-lms.s3.amazonaws.com/assets/s-fx-18-v1/videos/Notebook+3.mp4
+----------------------------------------------------------------------------------------------------
+ In this notebook, you will learn how to use the Genai Perf tool to measure the latency and throughput of various inference workloads.
+ Let's cover some of the basics before you start working on the notebook.
+ The Genai Perf tool has been developed by the Triton team at Envivia, and it's the recommended tool to measure inference performance no matter the inference endpoint.
+ In our NIM for LLM benchmarking guide, we make use of Genai Perf to measure the performance of NIM.
+ I recommend that you check out the guide.
+ It covers many of the concepts that you learned in previous notebooks.
+ The Genai Perf tool is a client-side LLM-focused benchmarking tool.
+ It provides metrics like time to first token, inter-token latency, tokens per second, and requests per second, and more.
+ You can use it to measure performance of any LLM inference endpoint that satisfies the OpenAI specification.
+ So you can compare the performance of NIMs versus your favorite Genai-Defai-I Manage Services.
+ Here you can inspect a typical command of Genai Perf.
+ Check for example that I'm passing the number of input and output tokens, in addition to other flags that you can read about in the documentation.
+ The output of the command is displayed at the right.
+ It contains statistics of important metrics like time to first token, inter-token latency, and request latency, which is just equivalent to end-to-end latency.
+ It also counts the number of input and output tokens, so that you can compute the throughput from them based on the latencies.
+ To produce the latency versus throughput plots that you explored in the previous notebook, you can set up a sweep across congarrences.
+ From the measurements, you can produce the plot and data display at the right.
+ Then you can use all the analysis that you're studying in the previous notebook with the metry about selecting the most optimal dot in that plot.
+ That's all from my side.
+ Let me conclude by summarizing what you are going to learn in this notebook.
+ You will start by completing your first performance measurement with NVIDIA Genai-I Perf.
+ Then you will set a sweep of congarrences to get various measurements of performance.
+ On these measurements, you'll be able to produce plots like the ones showed in the previous notebook.
+ And finally, you will be able to select the most optimal dot in that plot and compute the number of required GPUs from it.
+ Now it's your chance to start experimenting with Genai-I Perf.

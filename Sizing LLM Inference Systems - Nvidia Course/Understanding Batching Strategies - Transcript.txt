@@ -1,0 +1,110 @@
+----------------------------------------------------------------------------------------------------
+Understanding Batching Strategies
+Video URL: https://dli-lms.s3.amazonaws.com/assets/s-fx-18-v1/videos/Notebook+1.mp4
+----------------------------------------------------------------------------------------------------
+ Hello everyone and welcome to the notebook one of LLM inference sizing course.
+ In this notebook you will learn more about the metrics which are available during the LLM inference process.
+ You will use a simple simulator to understand the intrinsics of batching engines behind TensorRTLM and other modern inference engines and you will see the tremendous effects the modern optimizations bring to LLM inference.
+ Let us first explore what do we measure and why.
+ You have already experienced time to first token in the previous notebook.
+ Now let us explore what happens behind the scenes.
+ So if your request is sent by the network from the client as a stream, then tokenization happens when the characters and sequences of characters are converted to vectors which are possible by the LLM.
+ Then you have all those vectors from your request and you have to compute the attention metrics between those tokens.
+ That is the stage of pre-fuel.
+ After pre-fuel only one token is generated and since we are considering the streaming mode, this one token is detokenized and sent back to the client.
+ So this full process is measured when you see the time to first token metric.
+ By the way, you often can find the name for this same metric, first token latency or FTL and time to first token can be pronounced as CTFT.
+ Intertoken latency is a new metric.
+ During the generation phase, you have multiple tokens generated one by one by the LLM.
+ And to stream them as text, they have to be detokenized one by one and then sent to the client.
+ But what the intertoken latency is, is the measurements between those tokens received by the client.
+ So we assume that the detokenization takes the same time for each token and the networking takes the same time for each token.
+ Then actually measuring the intertoken latency in the client is the same as measuring the intertoken latency during the decoding and generation phase.
+ This metric sometimes is called time per output token and is usually pronounced as ITL for intertoken latency.
+ This metric is also important for customer perception of what's happening for the client perception of what's happening in the LLM.
+ Because that's the speed with which the words are appearing on their screens.
+ Finally, the last latency metric.
+ Time to generation or time to last token or end to end latency.
+ I usually use end to end latency when I speak about this metric.
+ This is exactly what you would expect it to measure.
+ Time from you sending the first request.
+ Till you get the last token of the sequence when the LLM and inference system has informed you that the generation has been completed successfully.
+ This metric is actually really important in what's called sequential mode when you cannot stream the tokens one by one to the client.
+ Maybe because there is another LLM which has to process these tokens and to maybe check the toxicity of the output for example.
+ Maybe because the API and the send doesn't support streaming.
+ But maybe because you are running the fetched inference and then you just would like to estimate your performance.
+ And these are cases when time to last token is irrelevant and important.
+ While latency shows for each individual request how long does each stage take.
+ Thruput shows how many requests can your system sustain per second.
+ What's the maximum capacity maximum load it can sustain.
+ Thruput can be measured multiple ways in requests per second, tokens per second, tokens per second, for instance, for GPU many, many ways.
+ But in any case when you report some throughput metric make sure to include these six measurements, these six input parameters to the results.
+ Include model, that's obvious precision input length, output length, concurrency, intensive parallelism.
+ You will see later in the notebook wise that's so important to include those ones and how a meeting one can change the results dramatically.
+ There are really two throughput metrics we recommend for using.
+ For measurements, the most unambiguous metric we recommend is requests per second per instance.
+ And for sizing for your next computations we recommend using requests per second per GPU.
+ These are normalization that we find most useful in our sizing journeys.
+ Some of the inference optimizations can be implemented in runtime and we will cover some of them in the notebook.
+ However, some of them cannot be implemented in runtime and are essentially some model changes like quantization or like sparsity.
+ We will cover the mix of those now.
+ Inflight batching is one of the most important runtime inference optimizations.
+ Actually, the one batching strategy that differs from the learning which model, so the previous generation of deep learning models like convolutional neural networks.
+ Inflight batching utilizes the fact that the language models are autoregressive.
+ So they generate token by token and to generate next token you have to process the model from the beginning to the end.
+ And in inflight batching each of these columns that you see here, this is generating one token for four requests concurrently.
+ So in previous generation of the models you had to batch pre-fills together and then pad the requests in the batch to the same length.
+ Until the last request has ended generation and you can supply the new batch.
+ But in the inflight batching you can keep the request generating because it's in your run of the same neural network.
+ While the another one is ended and you can add the new one here.
+ So this request 5, as it is in slot 4, is what's enabled by the inflight batch.
+ And you see there is much less gray space when the generation is just waiting for one request to end.
+ And since we know really batching was so efficient in the deep learning models and the convolutional neural networks, it continues to be very, very efficient in the language models, especially during the generation phase.
+ You will learn in the notebook about memory-bounded, compute-bound regimes.
+ And during the generation, batching helps very significantly to decrease the overheads of generating each new token.
+ So inflight batching is implemented in Tentor RTLLAM and via the Tentor RTLLAM to use NIM.
+ This is a very, very efficient method and I would not consider an LLM-Trend system which does not implement inflight batching.
+ Another important technique to know about is sparsity.
+ Sparsity is implemented by Nvidia hardware, structure sparsity, where every two elements of 4 can be 0s.
+ And that can be stored in a more compact way and then you can benefit from the reduced necessary memory bandwidth and increased computation speed.
+ However, sparsity is not runtime technique.
+ You have to train your model in such a way that it is spars and you can compress it that way.
+ So sparsity requires some post-training optimizations.
+ That's why it's included in Tentor RTLLLLL optimizer, which is a tool to be run on the models before they are submitted to inference.
+ You can see some of the speed ups in the spars regimes of LLM-270B here compared to the FB8 regime.
+ In the notebook, we will not use the spars model but we encourage you to experiment with sparsity and consider it for your deployment.
+ But make sure to use some evaluation tools like Nvidia and NIMO-Evaluator microservice, for example, to track the accuracy of your models when you use sparsity.
+ Speculating decoding is an interesting technique.
+ It's both compile time and runtime.
+ There are several methods of speculating decoding but what combines them together is the following.
+ As we discussed and will discuss in more details in the notebook, decoding phases is our memory-bound.
+ There are a lot of memory operations and there are a few computations happening because you generate only one token and all your metrics, all your attentions are already computed there.
+ And thus you can benefit from the computational tasks for the GPU.
+ So speculating decoding allows the inference system to generate multiple tokens during each step and then validate that these are really the tokens that will be generated by the large model.
+ So there are several methods of speculating decoding.
+ Some of them are runtime model.
+ Like using the draft model, you can use it just a smaller model to draft the tokens much quicker and then you can validate with the original large model.
+ The dozer and read rafters require some retraining or fine tuning, modifying the architecture of your model so they cannot be used straight away in runtime.
+ However, since the speculating decoding allows one to generate several tokens during the same time as usually without speculating decoding, one generates just one token.
+ This is a very powerful technique that can provide some three times, for example, speed improvement.
+ Obviously it's helpful only if and only if the GPU has available computational resources.
+ So maybe that's small batch size.
+ Maybe that's just very, very, very short requests.
+ In the right you see the diagram from the Medusa paper and there it is that for during one generation, you generate the original next token, but you also generate with the special heads of the Medusa heads, heads of the model you generate, they can't date for the next next token, next, next, next token and others.
+ And then you build three and select the best one out of them.
+ In this notebook you will use a simple simulator to understand the batching strategies.
+ The full source code of the simulator is available to you in the simulator folder.
+ This is how the results of the simulation look like.
+ On the x-axis there is time measured in artificial ticks and you have some columns here which represent decoding or profiling one token.
+ So after executing this first column which contains four pre-fields, piece-taste for pre-field, each of the requests in the batch of four slots has one token generated and sent to the client.
+ And here you can see that the pre-field time is from 0 to 8 ticks, so it took 8 ticks.
+ And at this stage the Q size is 96.
+ So you can track the Q size here down below in the same plot.
+ And here you can track the time to first token here since four requests have completed after 8 seconds of pre-field.
+ You have this purple point here at 8 and then the end to end latency.
+ We recorded as soon as the request is completed and here we see the end to end latency of the request in slot 1.
+ So in this section you will have hands-on experience with simulating the most important inference matrix.
+ You will learn how to analyze the throughput matrix and you will calculate once yourselves.
+ And most importantly you will explore the impact of batching options on the throughputs and latencies of your engines.
+ So please proceed to the notebook.
+ You.

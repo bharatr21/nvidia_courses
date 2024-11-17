@@ -1,0 +1,17 @@
+----------------------------------------------------------------------------------------------------
+Throughput vs Latency
+Video URL: https://dli-lms.s3.amazonaws.com/assets/s-fx-18-v1/videos/Notebook+2.mp4
+----------------------------------------------------------------------------------------------------
+ Welcome to the Notebook 2 of LLM inference sizing course.
+ In this notebook you will explore the real speed benchmarking data of the previous version of NVIDE NIM.
+ You will learn how the familiar metrics are represented there, and you will see the very important trade-offs that can be obtained from the real data.
+ In the notebook you will have a chance to explore the dataset of speeds of the previous version of NVIDE NIM.
+ In the dataset we show LLM3, 8B and 70B models.
+ We run them on DJAX A100 and DJAX H100, and we show FB16 and FB8 Precision.
+ We obviously use InFi Batching because it is a necessary part of NIM, but we don't use Sparsity to keep the models as close to the original as possible.
+ We provide several combinations of input and output lengths.
+ That's you can map somehow on your actual use case.
+ Time to run through the notebook.
+ In the notebook you will understand how to analyze the results of the benchmarking.
+ You will have a chance to play with the interactive plots, and finally understand how to write the full end-to-end case to compute the size of the resulting deployment, which is needed.
+ In the notebook you will have a chance to play with the interactive plots.

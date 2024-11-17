@@ -1,0 +1,34 @@
+----------------------------------------------------------------------------------------------------
+Total Cost Ownership for On-Premise and Cloud
+Video URL: https://dli-lms.s3.amazonaws.com/assets/s-fx-18-v1/videos/Notebook+4.mp4
+----------------------------------------------------------------------------------------------------
+ Hi everyone and welcome to the notebook on the Topel Costa Furniture or TCO for short.
+ In this notebook you will learn which factor is the fact the cost of ownership beyond the performance of your inference system.
+ Usually, there is a multitude of factors that affect the final price.
+ Your latency requirements may increase the final price.
+ Your FPate conversion efforts and sparsity conversion efforts may pay off.
+ Use the performance and thus decrease the final price.
+ Some customers will have to rely on the pre-approved clouds which may a bit increase the price.
+ However, some clouds may offer value discounts and there are so many of these factors that affect the price.
+ So we will cover just the broad range of them and you will have to include more details in your cost model if you would like to get as precise answer as possible.
+ The first biggest choice one has to make is whether to use clouds or to stay on premise.
+ In the clouds, auto scaling is sometimes possible.
+ And if it is, then sizing has to happen not just by the peak as it has to have on-prem by the peak load.
+ But it can consider auto scaling and have one instance as a unit of auto scaling.
+ In the on-prem costs, do you have separate bills for electricity cooling and management? If so, would you like to model that or just to have a bad guess? However, in the cloud on the contrary, you may require some additional payments for storage and other related costs for transferring.
+ Apart from hardware costs, there are obviously software costs which do differ for cloud and on-prem.
+ On-prem, to use Nvidia NIMS, you have to purchase only NVIE license.
+ In the cloud, there may be other software payments related to your deployments, for example, the management for the cluster software.
+ Finally, let's again have a look at the red pipeline that we have seen before.
+ You see there are multiple components accelerated on the GPUs, including retriever for the RAC models, including the guard rails, including the speech to text and text to speech parts.
+ And all these parts have to be sized separately and then you can just add up GPU by GPU.
+ Usually LLMs require full GPUs to work, so it's invisible to deploy multiple LLMs on one GPU.
+ The only exception to that is the multi-lora deployment we have covered in the introduction to this course.
+ We focus in the previous notebooks just on this part on the fine-tune LLM.
+ However, the benchmarking process techniques and the benchmarking techniques we cover should be applied to all the services above.
+ And then the necessary hardware has to be added, combined in the cluster and then utilized.
+ Finally, time to run through the notebook.
+ In this notebook, you will build a simple model which will allow you to choose between on-prem deployments, cloud deployments, and cloud APIs.
+ You will learn how to estimate the peaks in your request distribution when you just have the average.
+ And finally, you will be able to fulfill the goal of this course.
+ You will be able to select the best overall configuration, overall deployment for your LLM inference system.

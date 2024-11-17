@@ -1,0 +1,45 @@
+----------------------------------------------------------------------------------------------------
+First Contact with NIM
+Video URL: https://dli-lms.s3.amazonaws.com/assets/s-fx-18-v1/videos/Notebook+0.mp4
+----------------------------------------------------------------------------------------------------
+ Hi again, and welcome to this first notebook, where you will experiment with NIMS in BDIA inference microservices.
+ Let me explain to you some basic concepts about NIM before you work on the notebook.
+ Many of the companies I talk to have already begun the process of building AI applications.
+ On one side, we have managed generative AI services.
+ They have simple and user friendly APIs and are great to get started.
+ However, these benefits come with certain trade-offs, like limited control over the infrastructure, data usage, or generative AI strategy.
+ On the flip side, we have open source deployments.
+ Think about the shorty LLM and try to leverage for developers, which offer a do-it-yourself approach for inference.
+ You have a lot of control about work to deploy and about the security.
+ However, this increased control also means that you need to optimize the inference workload yourself, write example customer code, or find you in the models.
+ NVIDIA NIMS offers the best of both worlds, and it's a simple way to deploy AI models.
+ It offers many advantages, and in this slide we list some of them.
+ For instance, it offers compatibility with standard APIs.
+ If you have built your application using a different generative AI service, you can just swap the endpoint URL to point to NIMS.
+ The application will still work as it was before.
+ NIMS are also optimized to run efficiently for inference.
+ In this delay, you are going to learn to optimize inference workloads for your particular latency and throughput requirements.
+ However, with NIMS, we give those optimizations out of the box so that you can quickly deploy your LLM.
+ We do have many NIMS available for models in language, vision, or biology, so do check them out.
+ With our developer program, you can access them for free.
+ You can also leverage NIMS for production via Nvidia's AI Enterprise license.
+ In this notebook, you are going to have the chance of testing the NIM yourself.
+ Here, we show some of the advantages of NIMS with respect to a do-it-yourself approach.
+ The deployment time is quite significant, from minutes in NIMS to several days in the do-it-yourself approach.
+ NIMS also offers API standardization, optimized engines, built with TensorFlow.
+LLM, and several other advantages listed here.
+ Do take some time to read them out.
+ NIMS is basically a container exposing an API.
+ Each NIMS container is specific to the LLM it will serve.
+ There is a base container image across all LLM NIMS, and a model configuration layer with a model and asset data.
+ The design point here is to make deploying multiple NIMS as fast as possible, by reducing the base container image, and only newly downloading different lightweight model config layers for the container.
+ NIMS are deployed by launching the NIMS container, upon launch the NIMS, it will detect the underlying hardware, then it will mount the cache for the lightweight model config layer of the model and asset data.
+ It will then select the most optimal version of the model based on the hardware detected, it will download the optimized model from NGC, and finally, it will load the model and start serving it through a REST API endpoint.
+ NVIDIA explores a complex combinatorial space of possible optimizations, taking into account the model architecture, model size, and GPU hardware.
+ Then we pick the optimal configuration, depending on the objective, latency, throughput, or a balanced trade-off.
+ We do it for you, so that you don't have to implement sweeping scripts or expand people and computer resources to run it.
+ It's like us giving you the best cake ready to eat, instead of you finding the best recipe for the cake, the trial and error, and baking it yourself over and over again.
+ The result is just the issues.
+ After this introduction to NIM, you are ready to tackle this first notebook.
+ In it, you'll get familiar with NIMs, you will call the NIM endpoint with Carl and Python to generate some text, and you will measure the end-to-end latency per system to first open.
+ Now it's your chance to apply all you've learned about NIMs.

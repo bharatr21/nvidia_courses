@@ -1,0 +1,183 @@
+----------------------------------------------------------------------------------------------------
+Introduction and Environment
+Video URL: https://dli-lms.s3.amazonaws.com/assets/s-fx-18-v1/videos/Course+Introduction.mp4
+----------------------------------------------------------------------------------------------------
+ Hello, and welcome to this course about sizing LLM inference systems.
+ In this course, you will learn how to estimate the number of GPUs needed for your inference workload.
+ Before we start, we would like to remark that you don't need a deep expertise of LLMs to benefit from the course.
+ We've prepared ready-to-run notebooks with all the commands and assets for you.
+ Once you click on the star button, you will access the course environment with the notebooks.
+ We recommend that you click on start now since it takes a few minutes to load.
+ Before jumping to the notebooks, let me introduce the instructors of this DLI and give you an introduction of the contents of the course.
+ Let me tell you some background about Mitri and myself, since it will be your instructors during this course.
+ Mitri is Senior Deep Learning Solutions Architect at InVIDIA, where he supports deployment of AI and Deep Learning Solutions.
+ He's definitely the person to go to if you want to optimize your inference workload for production.
+ And I'm Sergio, also a Senior Deep Learning Solutions Architect at InVIDIA.
+ I work with companies across sectors to implement their anti-fai applications.
+ A My area of expertise is model compression with techniques like quantization.
+ First, I'm going to provide you with an example to understand why inference can get a bit complicated.
+ I will cover some discovery questions so that your inference estimation is as accurate as possible.
+ Afterwards, I'll describe the superstack available at InVIDIA for inference.
+ Finally, I'll give you an example of inference sizing and some general tips.
+ Let's look at a customer use case example.
+ This is a normal workflow found in a customer service center.
+ First, the clients have met a support ticket which is received by the AI chatbot.
+ This bot has access to a database with public and user-specific data.
+ It tries its best to answer the question.
+ But if it can solve the user's problem, then the system will escalate the issue to a human agent.
+ The agent reviews the information from the chatbot and then attempts to solve the end-user's issue.
+ In this example, the agent has access to a database with public and private info specific to the caller.
+ They use this to help address the user's question and close the ticket.
+ From this common use case, a natural question is to understand how many GPUs are required.
+ The answer to this question depends on some requirements.
+ You can think of input length, output length, model size, or first token latency limit as some of those requirements.
+ These requirements have a significant impact on the infrancising, so we recommend that you spend some time defining them.
+ The final step is to obtain an estimation of the number of GPUs needed alongside throughput, latency, and DCO metrics.
+ In this DLI, we are going to show you how you can obtain such estimation.
+ There are two stages of an LLM that you need to be aware of.
+ The first is Perfille and the second is the Coding.
+ Perfille is the time between pressing enter on your device and the first output token appearing on your screen.
+ The Coding, of course, when the other words in your search are generated.
+ Usually, in most requests, Perfille takes less than 20% of the end-to-end latency, while the Coding takes more than 80%.
+ That shows how important it is to send the tokens back to the client as soon as they are generated.
+ Such implementation is called streaming.
+ For infrancising, it's important to understand where and how your executing inference.
+ Concerning the where, you could have your GPUs on Brem or on the cloud.
+ And about how to execute inference, you could have an online application responding live to a customer, or an offline application without latency requirements.
+ Let's type deeper into these questions.
+ Word you deploy your GPUs can have a significant impact.
+ In an open-on-premise scenario, you have a fixed peak capacity equal to the number of GPUs available in your data center.
+ The pricing model is per peak capacity, and this means that you are paying for all the GPUs even if you are not using them.
+ In the cloud, there is a variable capacity, and you have some margin to scale the number of GPUs if needed.
+ In addition, generative AI services on the cloud usually charge per token.
+ For both approaches, our recommendation is to start with a minimal capacity of GPUs and leave some room to auto-scale for bursts of demand.
+ Concerning the how to execute, let's start with offline scenarios.
+ This case is rather simple.
+ You know your inputs, you know your output sizes, and then you just need to optimize for throughput.
+ Latency is not relevant here.
+ Firstly, check if your LLM fits on one GPU, and if not, apply tensor or pipeline parallelism to make it fit in the minimum number of GPUs.
+ Once it fits, just increase the path size to be as large as possible.
+ That's the technique to achieve the highest throughput.
+ But for the online use cases, there's a big caveat, and this caveat is the trade-off between throughput and latency.
+ This will be a topic across this course.
+ But in short, if you impose latency requirements for your inference, then you have to trade throughput.
+ Latency requirements are not for free.
+ Actually, there are two distinct flavors of latency requirements.
+ Let's examine them.
+ When discussing about latency requirements, you need to understand the difference between streaming and sequential mode.
+ In a streaming mode, you can generate tokens one at a time, and return them to the end client, like you saw in the chat GPT example.
+ In this mode, you care about time to first token, because this is the time during which the customer is waiting for the first token.
+ Afterwards, the following tokens are generated much faster, and the rate of generation is usually faster than the average human reading speed.
+ In sequential mode, you cannot stream the tokens.
+ You have to wait for the end result, and as a result, you care about the end to end latency.
+ This is the time to produce all the tokens in the output sequence.
+ In the notebooks, you will learn to optimize for both time to first token and end to end latency.
+ Let's review now some of the questions to ask if you are starting to size an inference application.
+ We recommend that you gather the following information before starting to estimate the inference performance.
+ Firstly, the models intended to use for this use case.
+ Second, the average number of tokens per prompt.
+ Next, how many tokens are there in the LLM output? The following one is the request per seconds.
+ Then also the latency requirements.
+ And finally, the GPUs intended to be used.
+ Let's cover some of these categories in the following slides.
+ The size of the model can have a huge impact in the inference performance.
+ At the high level, the bigger the model, the slower and more expensive the inference is.
+ Smaller models can have really good quality for particular tasks, while reducing the inference cost.
+ So we recommend that you explore them too.
+ The input length, sometimes they know that as context window, can impact the inference performance.
+ Very mind that words are converted into tokens.
+ Every model runs and tokens.
+ Tokens in, tokens out.
+ And usually, models like LLM can run in around 4K to 8K tokens, which are equivalent to roughly 306000 words in English.
+ In particular applications like RAC pipelines, the input length could be particularly large, since you are adding chance of documents into that context window.
+ In those situations, the first token latency can be large, since the input length is significant.
+ Sizing for on-prem is always sizing for the peak.
+ If the system is not running at peak, the effective cost per token grows.
+ This is especially important if there are several peaks that are quite high relative to the average.
+ For larger models, the available memory within one GPU may not be enough.
+ In those cases, you can use TensorFlow for the reason to split the model across several GPUs.
+ We recommend using GPUs with ambiling in these scenarios.
+ There are other types of parallelism, like pipeline or sequence parallelism, that can also alleviate the memory footprint of LLM during inference.
+ Let's now move into the tools available for LLM inference.
+ At the media, we provide containers to developers so that you can start using GPUs as quick and easy as possible.
+ In particular, let me tell you about two containers that you can try if you are thinking about running inference workloads.
+ The first is Straton plus TensorFlow TLLM.
+ You can find these two libraries on ambidias GitHub.
+ Many developers prefer a more hands-on approach and leverage these tools to optimize inference workloads.
+ The second one is Nim, which stands for ambidia inference microservice.
+ It's a great solution if you want to easily deploy LLM's as microservices in a few minutes.
+ Let's discuss about both approaches a bit deeper.
+ To understand TensorFlow TLLM and Traton, let's discuss about the inference workflow.
+ After training a model, it's time to optimize it for inference.
+ This is where tools like TensorFlow TLM play a big role.
+ The model is optimized for specific hardware and target constraints.
+ For example, throughput, latency, or memory constraints.
+ Once a model is optimized, it is a story in a model repository.
+ The next step is for inference serving to take place.
+ Inference serving is the process where the model is loaded into the memory and then is ready to run.
+ Traton is our recommended inference server.
+ Diplications then query that inference server, which is in charge of batching all those queries and running the model.
+ Finally, the inference server sends back the outputs to each of the clients.
+ Tensort TLLM is an open source library to optimize LLM's and build inference engines.
+ It offers SOTA performance for your particular available hardware.
+ We already support most of the popular models, but you can also add new ones easily.
+ Finally, Tensort TLLM offers great optimizations like in-flight batching or quantization.
+ The Traton inference server is an open source software for fast, scalable, and simplified inference serving.
+ In this slide, you can read about some of its advantages.
+ It supports any framework, such as PyTorch, Tensort Flow, and many others.
+ You can also pass any query type, like streaming or sequential modes that we discussed before.
+ It runs inference across many platforms, not just GPUs.
+ It also has integration with DevOps and MLOps tools, with special integration with Kubernetes and other tools in the Kubernetes ecosystem.
+ Traton not only delivers all of these features out of the box, but it doesn't sacrifice the performance.
+ It shows very high performance on both CPUs and GPUs.
+ Through features like dynamic batching or current model execution, I'm sure you'll be able to get a lot of performance from your inference workloads.
+ It also has a tool called Model Analyzer that looks for optimal configurations for a particular deployment.
+ AmbidianNIM provides a simple way to deploy AI models.
+ It offers many advantages, and in this slide, I list some of them.
+ For instance, it offers compatibility with standard APIs.
+ If you have built your application using a different generative AI service, you can just swap the endpoint URL to point to NIM.
+ NIMs are also optimized to run efficiently for inference.
+ In this delight, you are going to learn to optimize inference workloads for your particular latency and throughput requirements.
+ However, with NIMs, we give those optimizations out of the box so that you can quickly deploy your LLM.
+ We do have many NIMs available for models in language, vision, or biology.
+ So do check them out.
+ With our developer program, you can access them for free.
+ You can also leverage NIMs for production via Nvidia's AI Enterprise license.
+ In this course, you'll have the chance to use NIMs to measure their performance.
+ We also offer tools to measure the latency and throughput of your inference workloads.
+ Our recommended tool is GenaiParf, which is developed by our Triton team.
+ You will have the chance of using it during this course, and it's great to measure latency and throughput of NIMs, and actually any other inference endpoint.
+ We also have other tools in Tenshortial LLM and Triton that you can try.
+ So do check them out in the links provided in this slide.
+ Let me give you an appetizer of the types of benchmarking plots that you will produce during this course.
+ The metric will give much deeper about them later in the course, but it's good that you start familiarizing yourself with them.
+ The plot that you see here is a classical latency versus throughput plot for inference.
+ The plot corresponds to a small model, LLM3-8B, with 2000 input and 200 output length, on a DXH100.
+ We have also imposed a maximum time to first open of 0.
+5 seconds.
+ First thing to remark in the plot is that there is a trade-off between latency and throughput.
+ Each color denotes a different configuration, and each dot in the lines at different concurrency level.
+ For the time being, just consider that you have chosen a particular dot in this plot.
+ I have marked it with a downward triangle.
+ The metric later will explain how to make a decision about the dot to choose.
+ For that dot, you get that the throughput is 70.7% per second.
+ From this number, you can compute that we can serve around 679,000 daily active users, and are some assumptions describing this slide.
+ This number of daily active users is served with only 1DXH100.
+ If you want to serve more users, you need to add more DXS working in parallel.
+ Before concluding the presentation, let me give you some rules of thumb for sizing.
+ First, make use of a video software stack.
+ NIN, TENSOR, TLLM, or Triton are great tools to run in French workloads.
+ Second, for big models, make sure you use and believe enable systems.
+ Third, in a streaming mode, the time to first token is determined by the input length.
+ Next, remember that cost and latency are dominated by the number of output tokens.
+ Input tokens are usually much cheaper than output tokens.
+ You can check an example about this in the slide.
+ For the next rule, remember the trade-off between throughput and latency.
+ If you lean it first token latency, you will decrease throughput.
+ Finally, larger models require more memory and have higher latency, so bear that in mind when choosing your model size.
+ Let me conclude this presentation by giving you some references of various resources to check.
+ Our NIN for LLM benchmarking guide is a great document to understand different benchmarking.
+ Other resources to check are our NIN docs, sessions at the Metri and IGafe at GTC, and our series of blog posts about inference optimization.
+ Now, it's your chance to begin working on the notebooks.
+ Click on start to launch the Jupiter Lab environment.
+ See you there.
