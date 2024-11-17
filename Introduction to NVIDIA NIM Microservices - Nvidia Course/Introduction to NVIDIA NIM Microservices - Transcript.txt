@@ -1,0 +1,273 @@
+----------------------------------------------------------------------------------------------------
+Introduction to NVIDIA NIM Microservices
+Video URL: https://dli-lms.s3.amazonaws.com/assets/s-fx-23-v1/NIM_course.mp4?1731870193467
+----------------------------------------------------------------------------------------------------
+ Welcome to a video deep learning institute.
+ We're happy to see you here.
+ In this course, we're going to discuss a video name inference microservices.
+ This course is truly exciting.
+ By learning about the various features of NIM, you'll be ready to harness the transformative power of artificial intelligence.
+ Let's get started.
+ Here's the agenda for the course.
+ We'll start by setting some foundational knowledge about modern AI.
+ Next, we'll discuss what NIM is and how it addresses AI inference challenges.
+ Afterwards, we'll walk through the NIM user journey.
+ This course includes a hands-on lab that uses NIM microservices to develop a powerful RAC based AI chatbot.
+ After reviewing the lab, we provide some additional resources for possible next steps that further highlight the benefits of NIM.
+ Generative AI is a game changer.
+ Across every industry, more and more organizations are looking to roll out new applications that drive efficiencies, productivity, and revenue for their business.
+ These new types of applications defer from traditional applications and that they aren't limited by explicit programming instructions.
+ Instead, they rely on one or more AI models to tackle diverse problems.
+ They can perform more complex open-ended tasks like natural language processing, image recognition, and autonomous decision making.
+ When these applications are deployed in production, organizations need to consider security, latency and efficiency, flexibility, and how to manage infrastructure cost and scale.
+ NIM delivers the features critical to easy scalable deployment of generative AI models.
+ We're going to discuss the key concepts to help you understand what makes NIM the fastest and easiest way to integrate generative AI into applications.
+ We begin with a brief primer on AI models.
+ This is to help us understand the challenges of adopting AI and set the context for how NIM is used.
+ At the core of each NIM microservice is a powerful model that's been trained on bats amounts of data.
+ Model training is a concept from machine learning, which is defined as the development of statistical algorithms that can learn from data and generalize to unseen data, thus performing tasks without explicit instructions.
+ Modern AI uses algorithms that are modeled after the human brain, known as artificial neural networks that consists of neurons and layers.
+ Factors to consider when working on machine learning include the historical data or priors that contain useful information.
+ The algorithm that defines the types of calculations and compute, which refers to the hardware and software needed to perform the calculations on a given data set.
+ Training data is often an input and output pair, so the model can be described as simply the operations needed to transform the input data into the expected output.
+ The inputs and outputs can be numbers, texts, images, audio waves, or even genetic sequences or a combination of them.
+ During the model training process, input data is continuously fed into the algorithm and the calculated outputs are compared to the correct outputs.
+ While the difference is large initially, it decreases after the parameters adjust.
+ We refer to this as fitting the model to the data to capture the underlying patterns and relationships.
+ After countless iterations, the error is minimized and the function is learned.
+ This new way of doing software, instead of human engineered algorithms, we use data to train a universal function approximator so that it can become the algorithm that closely represents any natural or man-made process, including the process of reasoning.
+ Machine learning can be applied to almost anything as soon as you use enough examples as training data.
+ For this course, we'll focus on language models to complement the hands-on lab.
+ While there's ongoing research about models being able to perform multiple tasks, it's generally accepted that one model will perform one task well.
+ Model sizes have grown significantly over time.
+ Increasing the size of neural networks allows us to train models from more complex tasks, and large language models have demonstrated their ability to understand complex human language.
+ The basic idea is that larger models have the capacity to capture more intricate patterns and relationships within the data, hence the term deep learning.
+ Model size is generally measured by the number of parameters which is influenced by the number of neurons and layers.
+ Furthermore, the precision of these parameters, such as floating point 32, floating point 16, or integer 8, affects the amount of memory and compute resources required.
+ Intuitively, larger models take more time to generate outputs.
+ So it's helpful when some algorithms can be designed to process batches of data at the same time on special hardware such as the GPU.
+ Throughput here measures the amount of outputs that can be produced by a model in a given timeframe, whereas latency measures the amount of time it takes to generate an output.
+ These are important considerations for production applications when the models require to generate outputs quickly.
+ So besides generating the most accurate results, models should also aim to achieve high throughput and low latency, but you often can't achieve them all.
+ Recall that larger models generate more accurate results, but they also tend to have higher latency and lower throughput.
+ As an example, one straightforward way to increase the throughput and lower latency is to sacrifice accuracy by using a smaller model, but it may not meet the accuracy requirements.
+ In general, the recommendation is to maximize throughput given the latency budget for a specific application.
+ Larger models are also more hungry for data, or they'll underfit.
+ Without enough training data, large models aren't given the opportunity to rigorously update their parameters.
+ At the same time, more data will require more computing power.
+ The amount of data, along with the type of neural network architecture being used, will influence if the model can be trained in a reasonable amount of time, which is crucial for innovation and research.
+ So training powerful AI models from scratch can be complex, requiring massive amounts of data, powerful compute, and deep data science expertise.
+ Organizations for the right resources can train large foundation models on a broad data set and create frontier models that push the state of the art capabilities of modern AI.
+ While the amount of resources needed to train large models can seem like a barrier of intrigue, there are plenty of ways to leverage AI without training models from scratch.
+ A model is represented by two things, the description of the model's network architecture and a list of numbers were referred to as coefficients, model weights, or parameters.
+ This means that the model can be stored and recreated at a later time.
+ Depending on the model size, the file used to store the model can be very large.
+ For example, for a 70 billion parameter large language model, assuming half precision or floating point 16, the model could be as large as 130 gigabytes.
+ Model makers can open source their models and make them available via an online catalog.
+ They're usually searchable by the specific tasks that they perform, the organization, model architecture, or performance.
+ In fact, most developers that are building AI applications use open source models.
+ Developers can use train models for their own use cases.
+ If they're using an open source model, they'll carefully read the model card to understand how the model is used, how was trained, the model inputs and expected outputs.
+ They should apply the model on their own data sets to evaluate its performance, looking at accuracy as well as latency and throughput.
+ They can use the model as is or decide that they require some level of customization or fine tuning to produce a more desirable output.
+ They can perform fine tuning, where the model is incrementally trained on a specific data set.
+ Transfer learning is a powerful technique in machine learning that enhances model development by reusing and adapting pre-trained models for new but related tasks, leading to faster development times and improved performance with fewer data requirements.
+ This requires less effort than training a model from scratch if you're starting point as a foundation model.
+ An alternative approach is used perimeter efficient fine tuning techniques.
+ They focus on adapting only a small subset of a pre-trained models parameters, thereby greatly reducing computational costs and resource requirements.
+ This approach has been particularly useful for large language models, where full fine tuning could be prohibitive in terms of time and resources.
+ One notable technique is low rank adaptation or Laura.
+ This type of fine tuning requires only training a small number of parameters using a small amount of data.
+ These extra parameters have proven to work well in helping foundation models to adapt to new tasks.
+ Large language models are pre-trained on the world's corpus to allow the model to understand human language representation and reasoning.
+ But some use cases require a customization.
+ They need to tailor the foundation model for specific tasks.
+ You might think of variations like a code generating bot versus a customer service bot or a legal assistant versus a medical assistant.
+ There are several reasons to use Laura.
+ It requires only a small task specific data set that preserves general language knowledge from the foundation model and requires less compute.
+ Incredibly, we can train multiple Laura adapters to help a single foundation model perform various tasks.
+ This is important because really powerful large language models are typically very compute intensive, and using Laura adapters can maximize the utility of your AI infrastructure.
+ Another way to help models perform specific tasks is through prompt engineering.
+ By programmatically manipulating the model input, whether it's to add more contacts or provide instructions, prompt engineering is used widely in generative AI applications today.
+ In fact, there have been a lot of breakthroughs in the field of AI that uses only prompt engineering to build custom applications.
+ Once a model is trained, it can be deployed for inference.
+ Infraints is the process of passing inputs into a model to generate outputs.
+ Today, there are a lot of application builders who don't deal with training models at all.
+ Batch inference refers to a technique that combines multiple inference requests into a single batch to maximize throughput and minimize overall latency.
+ Instead of performing inference upon each request, which refer to as real-time inference, batch inference waits for multiple requests to arrive before performing the computation.
+ The benefits of this technique includes improved throughput with more efficient packing of requests into memory.
+ Reduced latency, when more queries can be processed in fewer cycles, and better resource utilization by processing multiple requests in parallel.
+ Your network model inference can be accelerated on ambideaggpu's with tensorRT.
+ This tool converts a neural network model into a tensorRT engine with state-of-the-art optimization to perform inference efficiently.
+ TensorRT achieves high performance by using a combination of techniques.
+ Notably, layer fusion, which combines multiple layers into a single operation to reduce computational overhead and precision calibration, which supports reduced precision formats like N8 or floating point 16 to boost inference speed while maintaining acceptable accuracy.
+ Model inference considerations are highlighted for LLMs for several reasons.
+ Firstly, LLMs have billions of parameters, requiring substantial memory and computational resources to process inputs through many neural network layers.
+ This is exacerbated by the autoregressive nature of LLMs that generate tokens one at a time sequentially.
+ Since the input sequence increases as generation progresses, it takes longer and longer for the LLM to process.
+ So the optimization that tensorRT LLM offers becomes critical to the user experience.
+ A complete model inference would include pre-imposed processing to ensure that the results are useful.
+ There can be quite a bit of details with pre-imposed processing.
+ Most developers who are integrating LLMs into their applications use libraries that package many of these common procedures into more intuitive functions.
+ Since models are inherently different, the pre-imposed processing can vary as well.
+ This means switching models may require additional programming unless there is a certain level of standardization.
+ Let's take a look at a typical AI integration.
+ A typical application architecture includes user interface, client side processing, server side processing, and database management.
+ The client accesses the presentation layer.
+ There's a business or application layer whose main function is to accept user requests from the client, process them, and determine how the data will be accessed.
+ The persistence layer consists of the database server that provides in-stores relevant data for the application.
+ It's closely connected to the business layer to the logic notes which database to refer to and retrieve the data from.
+ Crosscutting refers to the code that handles application concerns, such as security, communication, operational management.
+ These concerns affect all parts of the system.
+ We can wind the application's functionality without coding from scratch by integrating third-party services via pieces of code called APIs, or application programming interfaces.
+ An API is a set of rules and protocols that allow different software applications to communicate with each other.
+ It defines the methods and data formats that applications can use to request and exchange information.
+ It allows developers to integrate external services or data into the application without necessarily needing to understand the underlying code.
+ In this illustration, the APIs are designed by the third-party service, and our application would communicate with it over the network using those APIs.
+ We can integrate AI inference directly into the business logic, but this approach has several challenges.
+ Developers spend a lot of time writing custom code to optimize data processing, but it's difficult to modify or update individual components since they tend to be tightly coupled.
+ This can be a problem with the rapid evolution of AI we're experiencing.
+ The lack of isolation can make the system less resilient and harder to recover from failure.
+ Scaling to handle larger loads can be difficult and expensive because we need to provision the entire system even if only certain parts require more resources.
+ An alternative would be adopting a microservice-based approach to AI inference.
+ A microservices architecture builds an application as a collection of small independent deployable services.
+ They function independently and contribute to the overall whole.
+ The AI inference microservice would be focused on and responsible for taking in inputs and generating outputs.
+ It includes mechanisms like Scheduler Q's to manage inference requests and enable batch inference.
+ Additionally, it should be equipped with monitoring tools to provide performance metrics and health information to aid in system management and optimization.
+ The application would communicate with the microservice via APIs.
+ Although it introduces latency from inner service communication, there are many benefits to this approach.
+ Developers can make requests directly via network protocols like HTTP or GRPC and perform all the pre-imposed processing.
+ They'll likely use libraries that provide a more intuitive interface.
+ They might use orchestration tools for more complex applications.
+ This is what a NIM microservice is.
+ NIM microservices uses industry standard APIs.
+ What this means is that existing developers can use the same APIs they've been working with and there are plenty of resources for new developers to reference.
+ For example, NIM microservices for various large language models use the same API.
+ This API is compatible with OpenAI but is also extensive.
+ It introduces a single layer of abstraction yet allows each model to expose unique features or capabilities that differentiate them.
+ Using standardize APIs, developers can experiment with different NIM microservices for the same task with minimum code change, allowing them to focus on the more meaningful work and their common APIs available across all NIM microservices.
+ Engineering teams can focus on their specific scope of work.
+ The data scientists might be working with the AI models while the other engineers work on other parts of the application.
+ At the inference microservice encounters issues, it won't bring down the entire system.
+ Other services continue functioning, improving the overall resilience of the system.
+ In fact, most developers currently using state-of-the-art models do so via cloud-hosted APIs, so they're making requests against models that are deployed on the cloud, sometimes by themselves, but mostly by a third party.
+ One of the main reason for this is due to the demanding hardware specification that the models require.
+ Dedicating special hardware that have been optimized specifically for inference tasks can maximize resource utility and efficiency.
+ One concern when using cloud hosted models is being vulnerable to security risks, since the requests may contain user data, sensitive information, and intellectual property.
+ NIM microservices can be deployed in the cloud, data center, and work stations.
+ Deploying NIM microservices on your own infrastructure gives you complete control, which is an attractive feature for both development and production scenarios.
+ Multiple applications can share inference microservices.
+ An inference microservices can be scaled independently of other services.
+ If the demand for inference increases, you can scale just the inference microservice without affecting other parts of the application.
+ When a microservice reaches its load capacity, new instances of that service can be rapidly deployed to help relieve pressure.
+ Deploying a NIM microservice is easy.
+ The first thing to do is to decide the deployment strategy, or where the inference microservice will be deployed.
+ Then execute a simple Docker run command and specify the model name from the NVIDIA container registry.
+ A NIM microservice is a container specific to each model.
+ To the Docker command will download the container image, build, and run the container.
+ This container image is the recipe of how the microservice is built.
+ When the container is launched, it will detect the hardwares running on.
+ Load artifacts such as Lora adapters for customization, load and optimize inference engine, and begin serving.
+ NIM recognizes the importance of customization, which is why we offer support for custom models built for targeted use cases.
+ This is to ensure developers can adopt our technology to their unique requirements.
+ Their NIM microservices available across various domains and use cases such as language, vision, and speech.
+ These AM models can be used to unlock value from data, the enable innovation, enhance productivity, and provide new opportunities.
+ Because we work so closely with model makers, we're able to stay up to date on the latest innovations on how they're used.
+ With NIM microservices, users can easily build and deploy powerful applications such as digital human customer service chatbots, retrieval augmented generation, and drug discovery.
+ Having discussed all the key concepts around AI inference, let's revisit all the features that NIM offers.
+ NIM microservices packages all the features into containers, which include the models themselves as well as any necessary software elements to run in any environment.
+ It offers on parallel performance and ease of use, which helps to simplify the development and deployment of generative AI models for production applications.
+ Developers are faced with multiple challenges building enterprise AI applications.
+ While cloud hosted model APIs help with getting started, challenges related to data privacy and security, as well as model response latency, accuracy, API costs, and scaling hindered the path to production.
+ By avoiding these challenges associated with cloud hosted APIs and the complexity of model deployment, developers can focus on application development, speeding time to delivery of production ready generative AI applications, that port seamlessly for automatic performance optimized scaleout on data centers and cloud.
+ Post to building enterprise grade applications, NIM aims to streamline the path to production.
+ The first step to NIM starts with looking at the catalog of AI models available.
+ When looking for a specific model, you can browse by industry, domain, use case, or publisher.
+ Even though several models may have the same or similar use case, the results that they produce can vary.
+ We work closely with model makers to make models available as NIM microservices on launch.
+ Each model is accompanied by a model card, which provides some background, intended use, training data used, and high-level benchmarks.
+ Besides the models themselves, you'll find sample applications we wrapped around the AI models and the source codes to build them.
+ These applications send inference requests to NIM microservices that are securely deployed on a video infrastructure.
+ You can try and interact with them from your browser.
+ There are many sample applications that are more complex, which leverage multiple NIM microservices.
+ Next, you want to build your own application that integrates your own data.
+ We provide code samples to get you started.
+ You can build prototypes using the most advanced models to establish feasibility and answer several constraints related to cost, latency, or if they're better model choices.
+ When prototyping, you can start by pointing the inference requests to NIM videos infrastructure or deploying NIM microservices on your own.
+ If you have custom weights such as lower adapters, you'll need to deploy the NIM microservice to load the model artifacts.
+ As your application matures, you'll want to deploy the NIM microservices to assert security and control of production.
+ As the demand for your application grows, and during the system can scale efficiently becomes increasingly important.
+ When many users try to access the application simultaneously, it can lead to server overload, resulting in slower response times, decrease accuracy, or even system crashes.
+ You can use orchestration tools such as Kubernetes to manage your fleet.
+ Let's do a quick preview of the hands-on lab.
+ Our project revolves around using NIM microservices to build a rack-based chatbot with access to data from online web pages.
+ At this point, I would recommend you clicking on the start button below.
+ This will assign a cloud compute instance to you.
+ After about 10 minutes, the system installation on configuration will complete, and you'll be able to launch the hands-on lab.
+ You should start by visiting build.
+nvidia.
+com to try various AI models.
+ While you're there, be sure to obtain an API key, which you'll need for the hands-on lab.
+ Here's an example.
+ This is a simple chat interface that utilizes a large language model, but there are many novel AI models in our catalog.
+ This is what the interaction looks like.
+ As a user, you provide an input or query.
+ It gets added to the prompt template, and a combined input is sent to the large language model for a response.
+ Every input to the model is independent.
+ So to create continuity in a conversation, we can add the conversation history to the input.
+ This is a form of prompt and genuring for a chat use case.
+ This language model is very large and knowledgeable, so it's able to respond intelligently.
+ LLMs are powerful, but they're not without some shortcomings.
+ First, while LLMs are great at generating coherent responses, they often lack proprietary knowledge.
+ This means they can't access or generate company-specific data or insights that enterprises depend on, which can be a significant barrier to their utility and a corporate environment.
+ Second, there's the risk of outdated information, because the training data is never truly current.
+ So this creates a phenomenon known as hallucinations in AI.
+ This is when the LLM confidently provides information that is either partially correct or entirely fabricated.
+ While often convincing, these hallucinations can lead to misguided decisions if not checked against reliable data sources.
+ Consider an example.
+ If we were to pose the question, what's today's date? The LLM would respond with, I don't know, or worse, it might hallucinate.
+ Now, if the input to the LLM model was to include the information that contains the answer, which we refer to as providing additional context, then it's able to provide the correct answer.
+ If you enhance the accuracy and reliability of generative AI models, we implement a mechanism to give them truthful context.
+ This technique has come to be known as retrieval augmented generation.
+ Rack helps to generate up-to-date and domain-specific answers by connecting a large language model to your custom enterprise-private data.
+ There's no additional training involved.
+ With Rack, we mitigate hallucination, empower LLM's with real-time data access, and preserve data privacy because access to the knowledge base can be restricted.
+ The key to Rack is retrieving the correct information from the database based on the user query.
+ Instead of doing simple word or sentence matching, we use embeddings.
+ An embedding is a numerical representation of a data point.
+ In practice, this means a list of floating point values.
+ For example, if an embedding of size 8 was used to represent words, then each word would map to a particular list of eight floating point values.
+ And these values will be learned during model training.
+ They represent the semantic meaning of the words.
+ Between the words man and woman, they're similar in many dimensions or columns, but nearly opposite and gender.
+ This is also observed between the words king and queen.
+ Furthermore, between the words king and man, they're similar in all dimensions, but very different in the royalty dimension.
+ If we put these values in the vector space, we can visualize and calculate their similarities and relationships.
+ Importantly, we can mathematically derive relevant data for a Rack workflow.
+ Even though this basic example shows words, the concept extends to sentences and paragraphs.
+ The number of these values, also called the embedding size, can vary from model to model.
+ This is what the interaction with a Rack workflow looks like.
+ They're two steps.
+ First, we need to store the reliable information from a database.
+ For us, this will be web HTML that we gather in real time.
+ Using an embedding model, we convert text to vectors and store them.
+ This is done ahead of time and often continuously.
+ With data being available in the database, we use the query to find relevant or related documents.
+ It's important that we're using the same embedding model to process the user query for search.
+ The retrieved data is then used as context, along with the prompt and user query, becomes the input that gets consumed by the large language model for a response.
+ When you click on launch, it'll start a new browser tab.
+ The browser tab will bring you to a coding environment that'll let you program and compute in-sense remotely, with a right code for a Rack-based chatbot.
+ This means that nothing will be executed on your computer.
+ You're only using it to view what's going on in the remote instance we assigned you.
+ We'll use a few NIM micro services that have been deployed on a video's infrastructure.
+ Since you'll be using Cloud Hosted Model APIs, you'll need to obtain and provide an API key.
+ First, the remote instance will download data from the Nvidia websites.
+ This text data will be converted to numerical values by an embedding model via inference requests and stored in our compute instance.
+ This is local from the perspective of our cloud instance, but remote from the perspective of your computer.
+ Our chatbot will use the embedding model as well as an LLM model.
+ When the user provides a query, it'll also be processed by the embedding model, and the output will then be used to search the database.
+ The retrieved documents, along with the query, will be sent as an inference request to the LLM model.
+ When there are large amounts of people trying these inference microservices, our monitoring system will intelligently deploy more NIM micro services to meet the demand.
+ Go ahead and go through the hands-on lab.
+ After you're done, we'll also go through it together.

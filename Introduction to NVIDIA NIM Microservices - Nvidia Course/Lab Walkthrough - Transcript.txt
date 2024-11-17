@@ -1,0 +1,91 @@
+----------------------------------------------------------------------------------------------------
+Lab Walkthrough
+Video URL: https://dli-lms.s3.amazonaws.com/assets/s-fx-23-v1/lab_walkthrough.mp4?1731875256695
+----------------------------------------------------------------------------------------------------
+ Click on the star button to get started.
+ While the system is setting up your development environment, let's try NIM micro services on build.
+nvidia.
+com.
+ Clicking on this link will route you directly through the Lama 370B and struct model, but you can try many other NIM micro services in the catalog.
+ On this page, we see a user interface of a simple chat application that uses Lama 3 model.
+ We can use this to ask Lama 3 any question.
+ If you're unfamiliar with this large language model, you can read the model card to learn more.
+ When applicable, you're also sample projects or applications that use this micro service developers can reference here.
+ Let's try asking Lama 3 a question.
+ For example, let's ask what is strength? On the right, you'll find the code that is needed for developers to make this work.
+ Currently, we're showing different computer languages such as Python, Lane Chain, Node, or Shell.
+ It's worth noting that these APIs have been standardized.
+ So switching from one NIM micro service to another mostly involves changing parameters such as the model, as well as any custom parameters unique to each model.
+ Under the Docker tab, you'll find the command used to deploy this NIM micro service.
+ This is precisely the same command we used to deploy this specific micro service to a video's infrastructure for you to try.
+ Going back to the question, hitting the send button will send a request to the micro service, and a response will be streamed.
+ The response can be seen under the JSON tab, but has also been processed in this split for our user interface.
+ Looking at the response, it seems that Lama 3 knows a lot about different things related to the term trying, but it's not specific to our use case.
+ If we want to build an application that can help with specific things about the NVIDIA trying to input server, we can build a RAC system.
+ We'll build our RAC system using Python.
+ So we'll be using some of the code shown here.
+ Go ahead and give it a try.
+ After about 10 minutes, our development environment should be ready.
+ Your development environment is ready.
+ Go back to the DLive platform.
+ Clicking on the launch button will start a new browser tab and your development environment.
+ This is what the Jupyter server should look like.
+ In this Jupyter notebook, the building RAC system that uses Lama 3 NVIDIA microservice as well as others to help us answer your questions specific to NVIDIA trying to input server.
+ These microservices have been deployed on NVIDIA's infrastructure, which is used for prototyping.
+ After installing the software dependencies, we import them to become available in this Python kernel.
+ In this next cell, we'll set the API key, which is often needed when using network API services.
+ The API key will identify you as a user.
+ To obtain an API key, go back to buildonNVIDIA.
+com.
+ Click on get API key, followed by generate key.
+ Copy your API key and paste it into the Jupyter notebook.
+ Hit enter to set your API key.
+ This API key will be used for all microservices on NVIDIA's infrastructure and should give you enough credits for the rest of the lab.
+ In this next cell, we'll define a helper function to read HTML documents.
+ It uses the open source library beautiful soup for parsing HTML documents.
+ The function removes access spaces while keeping only the text.
+ For example, when we give the function this URL for trying to input server documentation, it'll read this HTML document.
+ An HTML document defines the elements that should go into a page, and the browser is responsible for rendering them.
+ We need to clean and retain only the text on this page.
+ We'll consider each web page a single document.
+ Executing the cell will define a function so it can be used later on.
+ Next cell defines the create embeddings function, which is used to load all knowledge in a database.
+ It will create one or more documents and prepare for storing.
+ It also uses a user defined index docs function that will define.
+ For the index docs function, we'll use a nin microservice to generate text embeddings used for a question answering retrieval.
+ By default, this embedding abstraction points to a hosted nin.
+ It can be changed to a local nin.
+ In a function definition, we split the documents into text chunks, generate the respective embeddings, and store them into a local database.
+ There's a conditional statement that checks if a local database exists and creates it if it doesn't.
+ Next two cells invokes the create embeddings function to create the database.
+ The next big chunk of code orchestrates a workflow using link chain.
+ This is a common workflow that has been defined as conversational retrieval chain.
+ It involves several steps that are described in the docs string.
+ First, it'll take a user query and ask ELM to rephrase the question for optimal information retrieval.
+ Second, using the new question, it'll retrieve relevant documents.
+ Lastly, given the relevant documents, ask the ELM to generate response.
+ So we're using two different ELMs in this workflow.
+ The question generator with Lama 370B instruct using the condensed question prompt.
+ In response generator, with Mixero 8x7B instruct using the QA prompt.
+ By default, the ELM abstraction points to a hosted name, but can be easily changed to a local name.
+ As you see, the same API and similar syntax can be used for these microservices.
+ Executing the cell defines the chain and passing arguments the chain will run it.
+ Next, we'll try with a single ELM without rephrasing the question.
+ By comparison, you might find it less desirable.
+ So building this type of application may require some experimentation, and NIM microservices make it extremely easy.
+ Once we're satisfied with our application, we should look to deploy it.
+ For demonstration, let's see how the same NIM microservices can be easily deployed locally.
+ You won't be able to run this in the development environment with PIPERID, but you should be able to do it in any environment with an available GPU.
+ You start by obtaining an NGCA PI key, which gives you access to various NVIDIA software resources.
+ You'll need to authenticate with the NVIDIA container registry.
+ Lama 3 model allows to see use a local cache for any model assets such as custom-lora adapters you've separately trained.
+ This single Docker command will download the container image, build, and start the container.
+ We can check the status of the microservice.
+ This command specifies the model by name, the container registry, and that the microservice should listen on port 8,000.
+ And that's it.
+ We have confirmation that the application has started.
+ Let's try with a single shell command.
+ In this command, I'm asking the LLM to complete a story, a sentence, that begins with once upon a time.
+ Let's try with Python.
+ You'll notice that we're passing the URL of our microservice, localhost port 8,000 to the base URL parameter.
+ The rest of the code is identical to the hands-on lab, except that the LLM points to a locally deployed name.

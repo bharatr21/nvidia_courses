@@ -60,7 +60,7 @@ def transcribe_video(mp4_title, mp4_url):
     return result['text']
 
 # Usage
-mp4_title = "Measuring Performance with GenAI-Perf" 
-mp4_url = "https://dli-lms.s3.amazonaws.com/assets/s-fx-18-v1/videos/Notebook+3.mp4"
+mp4_title = "Introduction to NVIDIA NIM Microservices"
+mp4_url = "https://dli-lms.s3.amazonaws.com/assets/s-fx-23-v1/NIM_course.mp4?1731870193467"
 transcription = transcribe_video(mp4_title, mp4_url)
 print(transcription)
