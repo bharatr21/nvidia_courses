@@ -1,0 +1,28 @@
+# AgentOS configuration for NVIDIA Agno Agent
+
+agentos:
+  database_url: ${AGENTOS_DATABASE_URL}
+  api:
+    host: ${AGENTOS_API_HOST}
+    port: ${AGENTOS_API_PORT}
+  ui:
+    port: ${AGENTOS_UI_PORT}
+
+agents:
+  - name: nvidia-generalist
+    source: agents.nvidia_agents:create_nvidia_team
+    entry: generalist
+  - name: nvidia-nim
+    source: agents.nvidia_agents:create_nvidia_team
+    entry: nim
+  - name: nvidia-rag
+    source: agents.nvidia_agents:create_nvidia_team
+    entry: rag
+  - name: nvidia-genai
+    source: agents.nvidia_agents:create_nvidia_team
+    entry: genai
+
+knowledge:
+  - name: nvidia-knowledge
+    source: knowledge.nvidia_knowledge:create_nvidia_knowledge
+

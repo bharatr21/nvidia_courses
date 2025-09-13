@@ -1,0 +1,109 @@
+# NVIDIA Developer Blog Scraper Configuration
+
+base_urls:
+  - "https://developer.nvidia.com/blog"
+  - "https://developer.nvidia.com/blog/category/generative-ai/"
+  # Removed: ai-inference category (404 error)
+  # - "https://developer.nvidia.com/blog/category/ai-inference/"
+  - "https://blogs.nvidia.com"
+  # Removed: artificial-intelligence category (404 error)
+  # - "https://blogs.nvidia.com/blog/category/artificial-intelligence/"
+  - "https://blogs.nvidia.com/blog/category/deep-learning/"
+
+# RSS/Feed URLs for better incremental scraping
+rss_feeds:
+  - "https://blogs.nvidia.com/feed/"
+  - "https://developer.nvidia.com/blog/feed/"
+
+# Keywords to filter relevant articles
+keywords:
+  generative_ai:
+    - "generative ai"
+    - "generative artificial intelligence"
+    - "large language model"
+    - "llm"
+    - "language model"
+    - "transformer"
+    - "gpt"
+    - "chatbot"
+    - "conversational ai"
+    - "natural language processing"
+    - "nlp"
+    
+  nim_microservices:
+    - "nim"
+    - "nvidia inference microservices"
+    - "microservices"
+    - "inference microservice"
+    - "containerized inference"
+    - "docker inference"
+    - "triton inference server"
+    
+  rag_systems:
+    - "retrieval augmented generation"
+    - "rag"
+    - "document retrieval"
+    - "vector database"
+    - "embedding"
+    - "semantic search"
+    - "knowledge base"
+    - "langchain"
+    
+  ai_agents:
+    - "ai agent"
+    - "intelligent agent"
+    - "autonomous agent"
+    - "multi-agent"
+    - "agent framework"
+    - "nemo agent"
+    - "agent toolkit"
+    
+  performance_optimization:
+    - "tensorrt"
+    - "inference optimization"
+    - "model optimization"
+    - "quantization"
+    - "pruning"
+    - "distillation"
+    - "batching"
+    - "throughput"
+    - "latency"
+
+# Output configuration
+output:
+  base_directory: "NVIDIA_Blog_Articles"
+  article_format: "markdown"  # or "txt"
+  include_images: false
+  max_articles_per_run: 50
+
+# Scraping configuration
+scraping:
+  delay_between_requests: 2  # seconds
+  timeout: 30  # seconds
+  user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  use_selenium: false  # set to true if JavaScript rendering needed
+  max_retries: 3
+
+# Monitoring configuration
+monitoring:
+  check_for_updates: true
+  update_interval_hours: 24
+  log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  log_file: "scraper.log"
+
+# Notification configuration
+notifications:
+  enabled: true
+  methods:
+    - "console"  # console, email, webhook
+  email:
+    smtp_server: ""
+    smtp_port: 587
+    username: ""
+    password: ""
+    from_address: ""
+    to_addresses: []
+  webhook:
+    url: ""
+    headers: {}
+  new_article_threshold: 1  # Notify when this many or more new articles found

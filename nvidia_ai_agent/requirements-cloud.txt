@@ -1,0 +1,45 @@
+# Streamlit Cloud Optimized Requirements
+# Lighter versions for cloud deployment
+
+# Core Streamlit
+streamlit>=1.28.0
+streamlit-chat>=0.1.1
+
+# LLM and AI  
+openai>=1.0.0
+langchain>=0.1.0
+langchain-community>=0.0.10
+langchain-openai>=0.0.5
+
+# Lightweight Vector Database (ChromaDB only, no Qdrant for cloud)
+chromadb>=0.4.0
+sentence-transformers>=2.2.0
+
+# Web Search and Data Processing
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+feedparser>=6.0.10
+aiohttp>=3.9.0
+
+# Data Processing and UI
+pandas>=2.0.0
+numpy>=1.24.0
+plotly>=5.15.0
+altair>=5.0.0
+
+# Configuration and Environment
+python-dotenv>=1.0.0
+pydantic>=2.0.0
+
+# Webhook handling (lightweight)
+flask>=2.3.0
+flask-cors>=4.0.0
+
+# Utilities
+rich>=13.0.0
+structlog>=23.0.0
+
+# Note: Removed heavy dependencies for cloud:
+# - agentiq (not needed for streamlit-only version)
+# - waitress (not needed in cloud)  
+# - qdrant-client (too heavy for streamlit cloud)
